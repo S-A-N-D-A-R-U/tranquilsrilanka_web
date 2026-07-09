@@ -4,7 +4,7 @@ import type { Activity } from "@/data/types";
 
 export default function ActivityCard({ activity }: { activity: Activity }) {
   return (
-    <Link href={`/activities/${activity.id}`} className="group block card-surface overflow-hidden hover:shadow-elegant hover:-translate-y-1 transition-all duration-500">
+    <Link href={`/activities/${activity.slug || activity.id}`} className="group block card-surface overflow-hidden hover:shadow-elegant hover:-translate-y-1 transition-all duration-500">
       <div className="relative h-52 overflow-hidden">
         <img src={activity.image} alt={activity.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-[1200ms]" loading="lazy" />
         <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/60 via-transparent to-transparent" />
