@@ -4,6 +4,8 @@ import PageHero from "@/components/ui/PageHero";
 import TourCard from "@/components/ui/TourCard";
 import Link from "next/link";
 
+export const revalidate = 0;
+
 export default async function OfferDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const offer = await getOfferBySlug(slug);
