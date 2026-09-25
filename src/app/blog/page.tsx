@@ -19,7 +19,7 @@ export default async function Blog() {
   const getPostTarget = (post: any) => post.externalLink ? "_blank" : "_self";
   return (
     <>
-      <PageHero image="/img6.jpg" eyebrow="Blog & News" title="Stories from the island" subtitle="Travel guides, hidden gems and seasonal tips from our team in Sri Lanka." />
+      <PageHero image="/travel-guide.webp" eyebrow="Blog & News" title="Stories from the island" subtitle="Travel guides, hidden gems and seasonal tips from our team in Sri Lanka." />
       <section className="container-page section-y">
         {posts.length === 0 ? (
           <div className="text-center py-20 text-muted-foreground">

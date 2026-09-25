@@ -49,7 +49,7 @@ export default function About() {
 
       <section className="container-page section-y grid lg:grid-cols-2 gap-14 items-center">
         <div className="relative">
-          <img src="/img9.jpg" alt="Our team" className="rounded-3xl shadow-elegant w-full h-[500px] object-cover" />
+          <img src="/tranquil-group-tour.webp" alt="Happy travellers with the Tranquil Sri Lanka team on a south coast beach" className="rounded-3xl shadow-elegant w-full h-[500px] object-cover" />
           <div className="absolute -bottom-6 -right-6 bg-primary-deep text-primary-foreground p-5 rounded-2xl shadow-elegant">
             <div className="text-3xl font-display font-bold text-accent">10+</div>
             <div className="text-xs uppercase tracking-widest mt-1">Years</div>

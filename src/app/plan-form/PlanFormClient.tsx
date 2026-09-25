@@ -36,7 +36,7 @@ export default function PlanForm() {
 
   return (
     <>
-      <PageHero image="/img20.jpg" eyebrow="Tailor-made" title="Plan your dream Sri Lankan journey" subtitle="Tell us about you. We'll send back a personalised itinerary within 48 hours." />
+      <PageHero image="/eco_and_nature.webp" eyebrow="Tailor-made" title="Plan your dream Sri Lankan journey" subtitle="Tell us about you. We'll send back a personalised itinerary within 48 hours." />
 
       <section className="container-page mt-16 relative z-10 mb-20">
         <div className="card-surface p-6 sm:p-10 shadow-elegant max-w-4xl mx-auto">

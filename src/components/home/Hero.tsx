@@ -6,10 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { preloadImages } from "@/lib/motion";
 
 const defaultSliderImages = [
-  { url: "/img23.jpg", title: "Golden Beaches", description: "Relax on the sun-kissed shores of Sri Lanka's stunning coastline.", tagline: "Where the Ocean Meets Serenity" },
-  { url: "/img2.jpg", title: "Cultural Wonders", description: "Step into a world of ancient kingdoms and sacred temples.", tagline: "Echoes of the Past" },
-  { url: "/img25.jpg", title: "Untamed Wildlife", description: "Witness majestic elephants and elusive leopards in the wild.", tagline: "Nature in its Purest Form" },
-  { url: "/img20.jpg", title: "Lush Tea Estates", description: "Breathe in the fresh mountain air as you stroll through tea plantations.", tagline: "Sip the Essence of Sri Lanka" },
+  { url: "/sun_and_beach.webp", title: "Golden Beaches", description: "Relax on the sun-kissed shores of Sri Lanka's stunning coastline.", tagline: "Where the Ocean Meets Serenity" },
+  { url: "/culture_and_heritage.webp", title: "Cultural Wonders", description: "Step into a world of ancient kingdoms and sacred temples.", tagline: "Echoes of the Past" },
+  { url: "/safari_and_wildlife.webp", title: "Untamed Wildlife", description: "Witness majestic elephants and elusive leopards in the wild.", tagline: "Nature in its Purest Form" },
+  { url: "/eco_and_nature.webp", title: "Lush Tea Estates", description: "Breathe in the fresh mountain air as you stroll through tea plantations.", tagline: "Sip the Essence of Sri Lanka" },
 ];
 
 const wordVariant = {
