@@ -13,7 +13,7 @@ export function sanitizeRichText(html: string) {
       "*": ["class"],
     },
     allowedSchemes: ["http", "https", "mailto", "tel"],
-    // Only embeds from trusted video/map hosts
+    // Only embeds from trusted video/map hosts (keep in sync with frame-src in next.config.ts)
     allowedIframeHostnames: ["www.youtube.com", "www.youtube-nocookie.com", "player.vimeo.com", "www.google.com"],
     transformTags: {
       a: sanitizeHtml.simpleTransform("a", { rel: "noopener noreferrer" }),
