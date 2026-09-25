@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { MapPin, Users, Calendar, Clock, Phone, Mail, User, MessageSquare, Car, Shield, Sparkles, Check, Loader2 } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
+import Honeypot from "@/components/ui/Honeypot";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { submitTransferForm } from "@/app/actions/formActions";
 
@@ -33,7 +34,7 @@ export default function Transfer() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     name: "", email: "", phone: "", passengers: "2",
-    pickupLocation: "", dropoffLocation: "", pickupDate: "", pickupTime: "", requests: ""
+    pickupLocation: "", dropoffLocation: "", pickupDate: "", pickupTime: "", requests: "", website: ""
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -42,7 +43,7 @@ export default function Transfer() {
     const res = await submitTransferForm(data);
     if (res.success) {
       setSuccess(true);
-      setData({ name: "", email: "", phone: "", passengers: "2", pickupLocation: "", dropoffLocation: "", pickupDate: "", pickupTime: "", requests: "" });
+      setData({ name: "", email: "", phone: "", passengers: "2", pickupLocation: "", dropoffLocation: "", pickupDate: "", pickupTime: "", requests: "", website: "" });
     } else {
       alert("Something went wrong. Please try again.");
     }
@@ -58,6 +59,7 @@ export default function Transfer() {
           onSubmit={handleSubmit}
           className="card-surface shadow-elegant overflow-hidden"
         >
+          <Honeypot value={data.website} onChange={(v) => setData((p) => ({ ...p, website: v }))} />
           <div className="bg-gradient-emerald text-primary-foreground px-7 py-6">
             <h2 className="font-display text-xl font-bold">Book your transfer</h2>
             <p className="text-sm text-primary-foreground/75 mt-1">We'll confirm by email within 2 hours.</p>

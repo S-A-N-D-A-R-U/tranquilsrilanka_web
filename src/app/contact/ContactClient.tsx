@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { MapPin, Mail, Phone, Send, Check, Loader2 } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
+import Honeypot from "@/components/ui/Honeypot";
 import { submitContactForm } from "@/app/actions/formActions";
 
 const info = [
@@ -20,7 +21,7 @@ const reasons = [
 export default function Contact() {
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
+  const [data, setData] = useState({ name: "", email: "", phone: "", subject: "", message: "", website: "" });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ export default function Contact() {
     const res = await submitContactForm(data);
     if (res.success) {
       setDone(true);
-      setData({ name: "", email: "", phone: "", subject: "", message: "" });
+      setData({ name: "", email: "", phone: "", subject: "", message: "", website: "" });
     } else {
       alert("Something went wrong. Please try again.");
     }
@@ -70,6 +71,7 @@ export default function Contact() {
           onSubmit={handleSubmit}
           className="card-surface p-7 sm:p-9 shadow-elegant"
         >
+          <Honeypot value={data.website} onChange={(v) => setData((p) => ({ ...p, website: v }))} />
           <h3 className="font-display text-xl font-bold text-primary-deep">Send us a message</h3>
           {done && (
             <div className="mt-5 rounded-xl bg-accent-soft text-primary-deep px-4 py-3 text-sm flex items-center gap-2">

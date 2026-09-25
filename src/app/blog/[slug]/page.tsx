@@ -5,6 +5,7 @@ import PageHero from "@/components/ui/PageHero";
 import { Calendar } from "lucide-react";
 import Link from "next/link";
 import { SITE_NAME, jsonLdScript, stripHtml, truncate } from "@/lib/seo";
+import { sanitizeRichText } from "@/lib/sanitize";
 
 export const revalidate = 0;
 
@@ -98,7 +99,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
           <div className="prose prose-lg prose-headings:font-display prose-headings:text-primary-deep prose-a:text-accent prose-img:rounded-xl mx-auto max-w-none">
             {post.isHtml ? (
-              <div dangerouslySetInnerHTML={{ __html: post.content }} />
+              <div dangerouslySetInnerHTML={{ __html: sanitizeRichText(post.content) }} />
             ) : (
               <div className="whitespace-pre-line text-gray-700 leading-relaxed text-lg">
                 {post.content}
