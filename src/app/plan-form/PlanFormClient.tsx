@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, Check, Loader2 } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
+import Honeypot from "@/components/ui/Honeypot";
 import { submitPlanForm } from "@/app/actions/formActions";
 
 const interests = ["Nature", "History & Culture", "Beach & Relaxation", "Adventure", "Wildlife Safari", "Wellness", "Local Food", "Festivals", "Hiking", "Water Sports"];
@@ -15,7 +16,7 @@ export default function PlanForm() {
   const [data, setData] = useState({
     firstName: "", lastName: "", email: "", phone: "",
     arrival: "", departure: "", adults: "2", children: "",
-    interests: [] as string[], accommodation: [] as string[], budget: "", notes: "",
+    interests: [] as string[], accommodation: [] as string[], budget: "", notes: "", website: "",
   });
 
   const handleFinalSubmit = async () => {
@@ -64,6 +65,7 @@ export default function PlanForm() {
               onSubmit={(e) => { e.preventDefault(); setStep(2); window.scrollTo({ top: 0, behavior: "smooth" }); }}
               className="space-y-10"
             >
+              <Honeypot value={data.website} onChange={(v) => setData((p) => ({ ...p, website: v }))} />
               <div>
                 <h3 className="font-display text-xl font-semibold text-primary-deep mb-5">About you</h3>
                 <div className="grid sm:grid-cols-2 gap-4">

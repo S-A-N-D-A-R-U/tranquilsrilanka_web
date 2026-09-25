@@ -3,21 +3,22 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight, Check, Loader2, User, Mail, Phone, Calendar, Users, MessageSquare } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
+import Honeypot from "@/components/ui/Honeypot";
 import { submitTourBooking } from "@/app/actions/formActions";
 
-export default function ClientPage({ tourTitle, tourImage }: { tourTitle: string; tourImage: string }) {
+export default function ClientPage({ tourSlug, tourTitle, tourImage }: { tourSlug: string; tourTitle: string; tourImage: string }) {
   const router = useRouter();
   
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
-    name: "", email: "", phone: "", date: "", passengers: "2", requests: ""
+    name: "", email: "", phone: "", date: "", passengers: "2", requests: "", website: ""
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const res = await submitTourBooking({ ...data, tourTitle });
+    const res = await submitTourBooking({ ...data, tourSlug });
     if (res.success) {
       setDone(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -64,6 +65,7 @@ export default function ClientPage({ tourTitle, tourImage }: { tourTitle: string
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                <Honeypot value={data.website} onChange={(v) => setData((p) => ({ ...p, website: v }))} />
                 <div className="grid sm:grid-cols-2 gap-5">
                   <label className="block sm:col-span-2">
                     <span className="block text-[11px] font-semibold uppercase tracking-widest text-muted-foreground mb-1.5">Full Name</span>

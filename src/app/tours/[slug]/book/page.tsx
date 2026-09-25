@@ -23,5 +23,5 @@ export default async function TourBookingPage({ params }: { params: Promise<{ sl
   }
 
   // Pass only what is needed to the client
-  return <ClientPage tourTitle={tour.title} tourImage={tour.image} />;
+  return <ClientPage tourSlug={tour.slug} tourTitle={tour.title} tourImage={tour.image} />;
 }

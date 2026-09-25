@@ -22,12 +22,12 @@ const links = {
     { label: "Special Offers", to: "/offers" },
   ],
   Tours: [
-    { label: "Cultural Tours", to: "/tours" },
-    { label: "Adventure Tours", to: "/tours" },
-    { label: "Wildlife Safari", to: "/tours" },
-    { label: "Beach Holidays", to: "/tours" },
-    { label: "Honeymoon Escapes", to: "/tours" },
-    { label: "Day Excursions", to: "/tours" },
+    { label: "Cultural Tours", to: "/tours?category=culture" },
+    { label: "Adventure Tours", to: "/tours?category=adventure" },
+    { label: "Wildlife Safari", to: "/tours?category=wildlife" },
+    { label: "Beach Holidays", to: "/tours?category=beach" },
+    { label: "Honeymoon Escapes", to: "/tours?category=honeymoon" },
+    { label: "Day Excursions", to: "/tours?type=day" },
   ],
   Support: [
     { label: "Contact Us", to: "/contact" },
