@@ -1,7 +1,7 @@
 import { getActivityBySlug } from "@/lib/api";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Clock, MapPin, Check, ChevronRight, Star } from "lucide-react";
+import { Clock, MapPin, Check, ChevronRight } from "lucide-react";
 import { Metadata } from "next";
 import { SITE_NAME, truncate } from "@/lib/seo";
 
@@ -49,7 +49,6 @@ export default async function ActivityPage({ params }: { params: Promise<{ slug:
           <div className="mt-4 flex flex-wrap gap-5 text-sm text-white/85">
             <span className="inline-flex items-center gap-1.5"><MapPin className="h-4 w-4 text-accent" /> {a.destination}</span>
             <span className="inline-flex items-center gap-1.5"><Clock className="h-4 w-4 text-accent" /> {a.duration}</span>
-            <span className="inline-flex items-center gap-1.5"><Star className="h-4 w-4 fill-accent text-accent" /> 4.8</span>
           </div>
         </div>
       </section>

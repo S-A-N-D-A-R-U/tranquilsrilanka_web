@@ -10,8 +10,9 @@ export const metadata: Metadata = {
   description: "Browse our handpicked multi-day round tours and day excursions across Sri Lanka.",
 };
 
-export default async function Tours() {
-  const tours = await getTours();
+export default async function Tours({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
+  const [tours, { type }] = await Promise.all([getTours(), searchParams]);
 
-  return <ToursClient tours={tours} />;
+  // Remount when the Round/Day type changes via a nav link, so the tab state follows the URL
+  return <ToursClient key={type === "day" ? "day" : "round"} tours={tours} />;
 }

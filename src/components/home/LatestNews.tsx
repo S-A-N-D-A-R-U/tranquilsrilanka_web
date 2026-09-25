@@ -19,7 +19,7 @@ export default async function LatestNews() {
       <div className="container-page">
         <SectionHeader eyebrow="Stories & News" title={<>Travel guides & <span className="italic text-accent">island stories</span></>} subtitle="Tips, hidden gems and seasonal travel updates from our team on the ground." />
         <div className="mt-14 grid lg:grid-cols-12 gap-6">
-          <Link href={getPostLink(hero)} target={getPostTarget(hero)} className="lg:col-span-7 group block card-surface overflow-hidden hover:shadow-elegant transition">
+          <Link href={getPostLink(hero)} target={getPostTarget(hero)} rel={hero.externalLink ? "noopener noreferrer" : undefined} className="lg:col-span-7 group block card-surface overflow-hidden hover:shadow-elegant transition">
             <div className="relative h-72 sm:h-96 overflow-hidden">
               <img src={hero.image} loading="lazy" decoding="async" alt={hero.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-[1200ms]" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/80 via-transparent to-transparent" />
@@ -34,7 +34,7 @@ export default async function LatestNews() {
           </Link>
           <div className="lg:col-span-5 grid gap-4">
             {rest.slice(0, 3).map((p: any) => (
-              <Link key={p.slug} href={getPostLink(p)} target={getPostTarget(p)} className="group flex gap-4 card-surface p-3 hover:shadow-soft transition">
+              <Link key={p.slug} href={getPostLink(p)} target={getPostTarget(p)} rel={p.externalLink ? "noopener noreferrer" : undefined} className="group flex gap-4 card-surface p-3 hover:shadow-soft transition">
                 <img src={p.image} loading="lazy" decoding="async" alt={p.title} className="h-24 w-28 rounded-xl object-cover flex-shrink-0 bg-black/10" />
                 <div className="min-w-0 flex flex-col justify-between py-1">
                   <div>
