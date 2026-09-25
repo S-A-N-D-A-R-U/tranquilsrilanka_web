@@ -7,8 +7,9 @@ import { getPosts } from "@/lib/api";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Tranquil Sri Lanka",
-  description: "Discover Sri Lanka",
+  title: "Sri Lanka Travel Blog — Guides, Tips & Stories",
+  description: "Sri Lanka travel guides, hidden gems, seasonal tips and news from our local team on the ground — plan your trip with insider knowledge.",
+  alternates: { canonical: "/blog" },
 };
 
 export default async function Blog() {
@@ -27,7 +28,7 @@ export default async function Blog() {
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
             {posts.map((p: any) => (
-              <Link key={p.slug || p.id} href={getPostLink(p)} target={getPostTarget(p)} className="group card-surface overflow-hidden hover:shadow-elegant transition flex flex-col">
+              <Link key={p.slug || p.id} href={getPostLink(p)} target={getPostTarget(p)} rel={p.externalLink ? "noopener noreferrer" : undefined} className="group card-surface overflow-hidden hover:shadow-elegant transition flex flex-col">
                 <div className="relative h-56 overflow-hidden shrink-0">
                   <img src={p.image} alt={p.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-[1200ms]" />
                   <span className="absolute top-3 left-3 bg-accent text-primary-deep text-[10px] uppercase tracking-widest font-bold px-2.5 py-1 rounded-full">{p.category}</span>

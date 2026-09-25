@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { ChevronDown, Globe, Mail, Menu, Phone, X } from "lucide-react";
 
 const navLinks = [
@@ -19,7 +19,6 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [tourOpen, setTourOpen] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.8);
@@ -37,10 +36,9 @@ export default function Navbar() {
   // Always solid (white) when not on the home page so text stays visible.
   const solid = scrolled || pathname !== "/";
 
-  const handleTour = (type: "round" | "day") => {
+  const closeMenus = () => {
     setTourOpen(false);
     setMenuOpen(false);
-    router.push(`/tours?type=${type}`);
   };
 
   const isActive = (path: string) => pathname === path || (path !== "/" && pathname.startsWith(path));
@@ -102,15 +100,14 @@ export default function Navbar() {
                 onMouseEnter={() => setTourOpen(true)}
                 onMouseLeave={() => setTourOpen(false)}
               >
-                <button className={`flex items-center ${getLinkClass("/tours")}`}>
+                <Link href="/tours" className={`flex items-center ${getLinkClass("/tours")}`}>
                   Tours <ChevronDown className="w-4 h-4 ml-1" />
-                </button>
-                {tourOpen && (
-                  <div className="absolute top-full left-0 w-48 bg-white shadow-lg py-2 rounded-b-md border-t-2 border-primary overflow-hidden">
-                    <button onClick={() => handleTour("round")} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">Round Tour</button>
-                    <button onClick={() => handleTour("day")} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">Day Tour</button>
-                  </div>
-                )}
+                </Link>
+                {/* Always rendered so crawlers can follow the links; shown on hover */}
+                <div className={`absolute top-full left-0 w-48 bg-white shadow-lg py-2 rounded-b-md border-t-2 border-primary overflow-hidden ${tourOpen ? "" : "hidden"}`}>
+                    <Link href="/tours?type=round" onClick={closeMenus} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">Round Tours</Link>
+                    <Link href="/tours?type=day" onClick={closeMenus} className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-primary/10 hover:text-primary transition-colors">Day Tours</Link>
+                </div>
               </div>
               {navLinks.slice(1).map((l) => (
                 <Link key={l.to} href={l.to} className={getLinkClass(l.to)}>{l.label}</Link>
@@ -157,12 +154,10 @@ export default function Navbar() {
                 <button onClick={() => setTourOpen((v) => !v)} className={`w-full p-2 text-left rounded-md flex items-center justify-between transition-colors ${isActive("/tours") ? "bg-primary/10 text-primary font-semibold" : "text-gray-700 hover:text-primary hover:bg-gray-50"}`}>
                   Tours <ChevronDown className={`w-4 h-4 transform transition-transform ${tourOpen ? "rotate-180" : ""}`} />
                 </button>
-                {tourOpen && (
-                  <div className="pl-4 mt-2 space-y-2 border-l-2 border-gray-100 ml-2">
-                    <button onClick={() => handleTour("round")} className="block w-full p-2 text-left text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors">Round Tour</button>
-                    <button onClick={() => handleTour("day")} className="block w-full p-2 text-left text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors">Day Tour</button>
-                  </div>
-                )}
+                <div className={`pl-4 mt-2 space-y-2 border-l-2 border-gray-100 ml-2 ${tourOpen ? "" : "hidden"}`}>
+                    <Link href="/tours?type=round" onClick={closeMenus} className="block w-full p-2 text-left text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors">Round Tours</Link>
+                    <Link href="/tours?type=day" onClick={closeMenus} className="block w-full p-2 text-left text-gray-700 hover:text-primary hover:bg-gray-50 rounded-md transition-colors">Day Tours</Link>
+                </div>
               </div>
               {navLinks.slice(1).map((l) => (
                 <Link key={l.to} href={l.to} className={`p-2 rounded-md transition-colors ${isActive(l.to) ? "bg-primary/10 text-primary font-semibold" : "text-gray-700 hover:text-primary hover:bg-gray-50"}`}>{l.label}</Link>

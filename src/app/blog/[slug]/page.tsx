@@ -1,9 +1,11 @@
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getPostBySlug } from "@/lib/api";
 import PageHero from "@/components/ui/PageHero";
 import { Calendar } from "lucide-react";
 import Link from "next/link";
+import { SITE_NAME, SITE_URL, jsonLdScript, stripHtml, truncate } from "@/lib/seo";
+import { sanitizeRichText } from "@/lib/sanitize";
 
 export const revalidate = 0;
 
@@ -12,14 +14,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = await getPostBySlug(slug);
   if (!post) return { title: "Post Not Found" };
 
+  const description = truncate(post.excerpt || stripHtml(post.content));
+  const url = `/blog/${post.slug}`;
+
   return {
-    title: `${post.title} | Tranquil Sri Lanka`,
-    description: post.content.substring(0, 160).replace(/<[^>]+>/g, ''),
+    title: post.title,
+    description,
+    alternates: { canonical: url },
+    // External-link posts only render a stub page here
+    robots: post.externalLink ? { index: false, follow: true } : undefined,
     openGraph: {
       title: post.title,
-      description: post.content.substring(0, 160).replace(/<[^>]+>/g, ''),
+      description,
+      url,
+      siteName: SITE_NAME,
       images: [post.image],
       type: "article",
+      publishedTime: post.createdAt,
+      modifiedTime: post.updatedAt || post.createdAt,
     },
   };
 }
@@ -32,35 +44,37 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound();
   }
 
-  // Redirect if it's an external link (although the UI should already prevent this, just in case)
+  // External posts have no content here — send visitors straight to the source
   if (post.externalLink) {
-    return (
-      <div className="min-h-screen flex items-center justify-center flex-col gap-4">
-        <p>This is an external post.</p>
-        <a href={post.externalLink} className="btn-primary">Go to External Link</a>
-      </div>
-    );
+    redirect(post.externalLink);
   }
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: post.title,
-    image: [post.image],
+    description: truncate(post.excerpt || stripHtml(post.content)),
+    image: [new URL(post.image, SITE_URL).href],
+    mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
     datePublished: post.createdAt,
     dateModified: post.updatedAt || post.createdAt,
     author: [{
       "@type": "Organization",
       name: "Tranquil Sri Lanka",
       url: "https://www.tranquilsrilanka.com"
-    }]
+    }],
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
+    },
   };
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={jsonLdScript(jsonLd)}
       />
       <PageHero 
         image={post.image} 
@@ -87,7 +101,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
           <div className="prose prose-lg prose-headings:font-display prose-headings:text-primary-deep prose-a:text-accent prose-img:rounded-xl mx-auto max-w-none">
             {post.isHtml ? (
-              <div dangerouslySetInnerHTML={{ __html: post.content }} />
+              <div dangerouslySetInnerHTML={{ __html: sanitizeRichText(post.content) }} />
             ) : (
               <div className="whitespace-pre-line text-gray-700 leading-relaxed text-lg">
                 {post.content}
