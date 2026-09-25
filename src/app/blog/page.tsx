@@ -4,7 +4,7 @@ import { Calendar, ArrowUpRight } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
 import { getPosts } from "@/lib/api";
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Sri Lanka Travel Blog — Guides, Tips & Stories",

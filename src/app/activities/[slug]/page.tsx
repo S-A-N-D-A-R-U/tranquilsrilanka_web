@@ -1,11 +1,17 @@
-import { getActivityBySlug } from "@/lib/api";
+import { getActivities, getActivityBySlug } from "@/lib/api";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Clock, MapPin, Check, ChevronRight } from "lucide-react";
 import { Metadata } from "next";
 import { SITE_NAME, truncate } from "@/lib/seo";
 
-export const revalidate = 0;
+export const revalidate = 3600;
+
+// Pre-render existing pages at build; new slugs are rendered on first visit and then cached
+export async function generateStaticParams() {
+  const items = await getActivities();
+  return items.filter((i: { slug?: string }) => i.slug).map((i: { slug: string }) => ({ slug: i.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;

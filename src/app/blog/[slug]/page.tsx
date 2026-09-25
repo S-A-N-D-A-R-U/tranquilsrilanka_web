@@ -1,13 +1,19 @@
 import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import { getPostBySlug } from "@/lib/api";
+import { getPostBySlug, getPosts } from "@/lib/api";
 import PageHero from "@/components/ui/PageHero";
 import { Calendar } from "lucide-react";
 import Link from "next/link";
 import { SITE_NAME, SITE_URL, jsonLdScript, stripHtml, truncate } from "@/lib/seo";
 import { sanitizeRichText } from "@/lib/sanitize";
 
-export const revalidate = 0;
+export const revalidate = 3600;
+
+// Pre-render existing pages at build; new slugs are rendered on first visit and then cached
+export async function generateStaticParams() {
+  const items = await getPosts();
+  return items.filter((p: { externalLink?: string }) => !p.externalLink).filter((i: { slug?: string }) => i.slug).map((i: { slug: string }) => ({ slug: i.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;

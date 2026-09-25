@@ -2,7 +2,7 @@ import { getTours } from "@/lib/api";
 import ToursClient from "./ToursClient";
 import { Metadata } from "next";
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Sri Lanka Tours — Round Tours & Day Excursions",
