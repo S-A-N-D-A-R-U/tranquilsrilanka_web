@@ -4,7 +4,13 @@ import TourClientPage from "./TourClientPage";
 import { Metadata } from "next";
 import { SITE_NAME, SITE_URL, jsonLdScript, truncate } from "@/lib/seo";
 
-export const revalidate = 0;
+export const revalidate = 3600;
+
+// Pre-render existing pages at build; new slugs are rendered on first visit and then cached
+export async function generateStaticParams() {
+  const items = await getTours();
+  return items.filter((i: { slug?: string }) => i.slug).map((i: { slug: string }) => ({ slug: i.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -32,8 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function TourPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const tour = await getTourBySlug(slug);
-  const tours = await getTours();
+  const [tour, tours] = await Promise.all([getTourBySlug(slug), getTours()]);
 
   if (!tour) {
     notFound();

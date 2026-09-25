@@ -1,7 +1,7 @@
 import { getActivities } from "@/lib/api";
 import ThingsToDoClient from "./ThingsToDoClient";
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export const metadata = {
   title: "Things to Do in Sri Lanka",

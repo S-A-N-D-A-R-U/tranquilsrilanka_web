@@ -12,7 +12,7 @@ import Reveal from "@/components/ui/Reveal";
 import { Metadata } from "next";
 import { getTours, getActivities, getHeroSlides } from "@/lib/api";
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: { absolute: "Tranquil Sri Lanka — Tailor-Made Tours of the Pearl Island" },
@@ -21,9 +21,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const tours = await getTours();
-  const activities = await getActivities();
-  const heroSlides = await getHeroSlides();
+  const [tours, activities, heroSlides] = await Promise.all([getTours(), getActivities(), getHeroSlides()]);
 
   return (
     <main>
