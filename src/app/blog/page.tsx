@@ -7,8 +7,9 @@ import { getPosts } from "@/lib/api";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Tranquil Sri Lanka",
-  description: "Discover Sri Lanka",
+  title: "Sri Lanka Travel Blog — Guides, Tips & Stories",
+  description: "Sri Lanka travel guides, hidden gems, seasonal tips and news from our local team on the ground — plan your trip with insider knowledge.",
+  alternates: { canonical: "/blog" },
 };
 
 export default async function Blog() {

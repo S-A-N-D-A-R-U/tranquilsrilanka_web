@@ -4,7 +4,8 @@ import ThingsToDoClient from "./ThingsToDoClient";
 export const revalidate = 0;
 
 export const metadata = {
-  title: "Things to Do in Sri Lanka | Tranquil Sri Lanka",
+  title: "Things to Do in Sri Lanka",
+  alternates: { canonical: "/things-to-do" },
   description: "From whale watching to tea tasting — Sri Lanka is endlessly surprising. Browse our top curated experiences.",
 };
 

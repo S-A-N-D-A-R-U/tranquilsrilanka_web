@@ -3,6 +3,7 @@ import { DM_Sans, Playfair_Display } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import WhatsAppFloat from "@/components/layout/WhatsAppFloat";
+import { jsonLdScript } from "@/lib/seo";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -19,7 +20,10 @@ const playfairDisplay = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.tranquilsrilanka.com"),
-  title: "Tranquil Sri Lanka — Tours & Travel | Pearl of the Indian Ocean",
+  title: {
+    default: "Tranquil Sri Lanka — Tours & Travel | Pearl of the Indian Ocean",
+    template: "%s | Tranquil Sri Lanka",
+  },
   description:
     "Plan your dream Sri Lanka tour with Tranquil Sri Lanka. Tailor-made tours, day excursions, transfers, and authentic island experiences.",
   openGraph: {
@@ -27,7 +31,12 @@ export const metadata: Metadata = {
     description: "Plan your dream Sri Lanka tour with Tranquil Sri Lanka.",
     url: "https://www.tranquilsrilanka.com",
     siteName: "Tranquil Sri Lanka",
+    locale: "en_US",
     type: "website",
+    images: ["/tour_hero.webp"],
+  },
+  twitter: {
+    card: "summary_large_image",
   },
 };
 
@@ -36,8 +45,8 @@ const jsonLd = {
   "@type": "TravelAgency",
   name: "Tranquil Sri Lanka",
   url: "https://www.tranquilsrilanka.com",
-  logo: "https://www.tranquilsrilanka.com/favicon.ico",
-  image: "https://www.tranquilsrilanka.com/favicon.ico",
+  logo: "https://www.tranquilsrilanka.com/logo.png",
+  image: "https://www.tranquilsrilanka.com/logo.png",
   description: "Plan your dream Sri Lanka tour with Tranquil Sri Lanka. Tailor-made tours, day excursions, transfers, and authentic island experiences.",
   address: {
     "@type": "PostalAddress",
@@ -69,7 +78,7 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={jsonLdScript(jsonLd)}
         />
       </head>
       <body className="min-h-[100dvh] flex flex-col font-sans text-foreground bg-background antialiased">

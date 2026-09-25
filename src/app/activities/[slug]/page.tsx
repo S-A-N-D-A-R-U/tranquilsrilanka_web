@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Clock, MapPin, Check, ChevronRight, Star } from "lucide-react";
 import { Metadata } from "next";
+import { SITE_NAME, truncate } from "@/lib/seo";
 
 export const revalidate = 0;
 
@@ -11,13 +12,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const activity = await getActivityBySlug(slug);
   if (!activity) return { title: "Activity Not Found" };
 
+  const description = truncate(activity.shortDescription);
+  const url = `/activities/${activity.slug || activity.id}`;
+
   return {
-    title: `${activity.title} | Tranquil Sri Lanka`,
-    description: activity.shortDescription,
+    title: activity.title,
+    description,
+    alternates: { canonical: url },
     openGraph: {
-      images: [activity.image],
       title: activity.title,
-      description: activity.shortDescription,
+      description,
+      url,
+      siteName: SITE_NAME,
+      images: [activity.image],
     },
   };
 }

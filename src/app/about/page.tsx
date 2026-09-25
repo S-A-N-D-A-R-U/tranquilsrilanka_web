@@ -2,8 +2,9 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Tranquil Sri Lanka",
-  description: "Discover Sri Lanka",
+  title: "About Us — Family-Owned Tour Operator in Kandy",
+  description: "Meet Tranquil Sri Lanka, a family-owned travel company in Kandy crafting private, tailor-made Sri Lanka tours with expert local chauffeur-guides for over 10 years.",
+  alternates: { canonical: "/about" },
 };
 
 import Link from "next/link";

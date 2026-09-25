@@ -4,8 +4,9 @@ import { Metadata } from "next";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Special offers & deals",
-  description: "Discover Sri Lanka",
+  title: "Sri Lanka Tour Offers & Deals",
+  description: "Limited-time savings on our most popular Sri Lanka round tours and day excursions. Browse current special offers from Tranquil Sri Lanka.",
+  alternates: { canonical: "/offers" },
 };
 
 import Link from "next/link";

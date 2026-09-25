@@ -4,6 +4,7 @@ import { getPostBySlug } from "@/lib/api";
 import PageHero from "@/components/ui/PageHero";
 import { Calendar } from "lucide-react";
 import Link from "next/link";
+import { SITE_NAME, jsonLdScript, stripHtml, truncate } from "@/lib/seo";
 
 export const revalidate = 0;
 
@@ -12,14 +13,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = await getPostBySlug(slug);
   if (!post) return { title: "Post Not Found" };
 
+  const description = truncate(post.excerpt || stripHtml(post.content));
+  const url = `/blog/${post.slug}`;
+
   return {
-    title: `${post.title} | Tranquil Sri Lanka`,
-    description: post.content.substring(0, 160).replace(/<[^>]+>/g, ''),
+    title: post.title,
+    description,
+    alternates: { canonical: url },
+    // External-link posts only render a stub page here
+    robots: post.externalLink ? { index: false, follow: true } : undefined,
     openGraph: {
       title: post.title,
-      description: post.content.substring(0, 160).replace(/<[^>]+>/g, ''),
+      description,
+      url,
+      siteName: SITE_NAME,
       images: [post.image],
       type: "article",
+      publishedTime: post.createdAt,
+      modifiedTime: post.updatedAt || post.createdAt,
     },
   };
 }
@@ -60,7 +71,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={jsonLdScript(jsonLd)}
       />
       <PageHero 
         image={post.image} 

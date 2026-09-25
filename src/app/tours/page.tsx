@@ -5,7 +5,8 @@ import { Metadata } from "next";
 export const revalidate = 0;
 
 export const metadata: Metadata = {
-  title: "Tours in Sri Lanka | Tranquil Sri Lanka",
+  title: "Sri Lanka Tours — Round Tours & Day Excursions",
+  alternates: { canonical: "/tours" },
   description: "Browse our handpicked multi-day round tours and day excursions across Sri Lanka.",
 };
 

@@ -3,8 +3,32 @@ import { getOfferBySlug, getTours } from "@/lib/api";
 import PageHero from "@/components/ui/PageHero";
 import TourCard from "@/components/ui/TourCard";
 import Link from "next/link";
+import { Metadata } from "next";
+import { SITE_NAME, truncate } from "@/lib/seo";
 
 export const revalidate = 0;
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const offer = await getOfferBySlug(slug);
+  if (!offer) return { title: "Offer Not Found" };
+
+  const description = truncate(offer.shortDescription || offer.fullDescription || "");
+  const url = `/offers/${offer.slug}`;
+
+  return {
+    title: offer.title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: offer.title,
+      description,
+      url,
+      siteName: SITE_NAME,
+      images: [offer.image],
+    },
+  };
+}
 
 export default async function OfferDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

@@ -2,6 +2,7 @@ import { getTourBySlug, getTours } from "@/lib/api";
 import { notFound } from "next/navigation";
 import TourClientPage from "./TourClientPage";
 import { Metadata } from "next";
+import { SITE_NAME, jsonLdScript, truncate } from "@/lib/seo";
 
 export const revalidate = 0;
 
@@ -10,13 +11,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const tour = await getTourBySlug(slug);
   if (!tour) return { title: "Tour Not Found" };
 
+  const title = `${tour.title} — ${tour.duration}`;
+  const description = truncate(tour.overview);
+  const url = `/tours/${tour.slug || tour.id}`;
+
   return {
-    title: `${tour.title} — ${tour.duration}`,
-    description: tour.overview.slice(0, 160),
+    title,
+    description,
+    alternates: { canonical: url },
     openGraph: {
+      title,
+      description,
+      url,
+      siteName: SITE_NAME,
       images: [tour.image],
-      title: `${tour.title} — ${tour.duration}`,
-      description: tour.overview.slice(0, 160),
       type: "article",
     },
   };
@@ -59,7 +67,7 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={jsonLdScript(jsonLd)}
       />
       <TourClientPage tour={tour} tours={tours} />
     </>
