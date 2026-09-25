@@ -1,42 +1,64 @@
 import { MetadataRoute } from 'next';
-import { getTours, getPosts } from '@/lib/api';
+import { getTours, getPosts, getActivities, getOffers } from '@/lib/api';
+import { SITE_URL } from '@/lib/seo';
 
-const DOMAIN = "https://www.tranquilsrilanka.com";
+// Rebuild the sitemap at most once an hour instead of querying the DB on every crawl
+export const revalidate = 3600;
+
+type Doc = { slug?: string; id?: string; updatedAt?: string; createdAt?: string; externalLink?: string };
+
+const lastModified = (doc: Doc) => {
+  const date = doc.updatedAt || doc.createdAt;
+  return date ? new Date(date) : undefined;
+};
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const tours = await getTours();
-  const posts = await getPosts();
+  const [tours, posts, activities, offers] = await Promise.all([
+    getTours(),
+    getPosts(),
+    getActivities(),
+    getOffers(),
+  ]);
 
-  const tourEntries = tours.map((tour: any) => ({
-    url: `${DOMAIN}/tours/${tour.slug || tour.id}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.9,
-  }));
+  const entries = (
+    docs: Doc[],
+    path: string,
+    changeFrequency: 'weekly' | 'monthly',
+    priority: number,
+  ): MetadataRoute.Sitemap =>
+    docs
+      .filter((doc) => doc.slug || doc.id)
+      .map((doc) => ({
+        url: `${SITE_URL}/${path}/${doc.slug || doc.id}`,
+        lastModified: lastModified(doc),
+        changeFrequency,
+        priority,
+      }));
 
-  const blogEntries = posts.map((post: any) => ({
-    url: `${DOMAIN}/blog/${post.slug || post._id.toString()}`,
-    lastModified: new Date(post.updatedAt || post.createdAt || new Date()),
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }));
-
-  const staticRoutes = [
+  const staticRoutes: MetadataRoute.Sitemap = [
     '',
     '/about',
     '/tours',
     '/things-to-do',
+    '/offers',
     '/seat-in-coach',
     '/travel-guide',
     '/transfer',
+    '/plan-form',
     '/contact',
     '/blog',
   ].map((route) => ({
-    url: `${DOMAIN}${route}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
+    url: `${SITE_URL}${route}`,
+    changeFrequency: 'monthly',
     priority: route === '' ? 1.0 : 0.8,
   }));
 
-  return [...staticRoutes, ...tourEntries, ...blogEntries];
+  return [
+    ...staticRoutes,
+    ...entries(tours, 'tours', 'weekly', 0.9),
+    ...entries(activities, 'activities', 'monthly', 0.8),
+    ...entries(offers, 'offers', 'weekly', 0.7),
+    // External-link posts redirect off-site, so they don't belong in the sitemap
+    ...entries(posts.filter((p: Doc) => !p.externalLink), 'blog', 'monthly', 0.7),
+  ];
 }
