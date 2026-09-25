@@ -38,7 +38,7 @@ export default function Contact() {
 
   return (
     <>
-      <PageHero image="/img17.jpg" eyebrow="Get in Touch" title="Let's plan your dream journey" subtitle="Our travel designers are standing by — usually reply within 2 hours." />
+      <PageHero image="/tranquil-group-tour.webp" eyebrow="Get in Touch" title="Let's plan your dream journey" subtitle="Our travel designers are standing by — usually reply within 2 hours." />
 
       <section className="container-page -mt-16 relative z-10 grid sm:grid-cols-3 gap-4 mb-16">
         {info.map(({ Icon, t, d }) => (
