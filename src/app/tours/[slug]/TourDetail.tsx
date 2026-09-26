@@ -1,52 +1,17 @@
-"use client";
-
-import { useRef, useState, useMemo } from "react";
+import type { ReactNode } from "react";
 import CmsImage from "@/components/ui/CmsImage";
 import Link from "next/link";
-import { Clock, MapPin, Star, Check, X, ChevronRight, CalendarX, Wallet, Users, User, ChevronLeft, Plus, Minus, Tag } from "lucide-react";
-import TourCard from "@/components/ui/TourCard";
+import { Clock, MapPin, Star, Check, X, ChevronRight, CalendarX, Wallet, Users, User, Plus, Minus, Tag } from "lucide-react";
 import type { Tour } from "@/data/types";
 
-export default function TourClientPage({ tour, tours }: { tour: any, tours: Tour[] }) {
+const formatPrice = (n: number) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+/** Tour detail page body (Server Component). `related` is the client-side related-tours carousel. */
+export default function TourDetail({ tour, related }: { tour: Tour; related: ReactNode }) {
   const gallery = tour.gallery && tour.gallery.length ? tour.gallery : [tour.image];
-  const formattedPrice = tour.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  const originalPrice = tour.originalPrice ? tour.originalPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : null;
+  const formattedPrice = formatPrice(tour.price);
+  const originalPrice = tour.originalPrice ? formatPrice(tour.originalPrice) : null;
   const locationLabel = tour.destinations.join(", ");
-
-  type RelatedFilter = "day" | "round" | "special";
-  const [relatedFilter, setRelatedFilter] = useState<RelatedFilter>(tour.type === "day" ? "day" : "round");
-
-  const isSpecial = (t: any) =>
-    t.categories.some((c: string) => /special|adventure|honeymoon|wildlife|luxur/i.test(c)) || t.isPopular;
-
-  const related = useMemo(() => {
-    const others = tours.filter((t) => t.id !== tour.id);
-    let pool = others;
-    if (relatedFilter === "day") pool = others.filter((t) => t.type === "day");
-    else if (relatedFilter === "round") pool = others.filter((t) => t.type === "round");
-    else pool = others.filter(isSpecial);
-
-    const scored = pool
-      .map((t) => ({ t, score: t.categories.filter((c: string) => tour.categories.includes(c)).length }))
-      .sort((a, b) => b.score - a.score)
-      .map((x) => x.t);
-
-    const list = scored.length ? scored : pool.length ? pool : others;
-    return list.slice(0, 6);
-  }, [relatedFilter, tour.id, tour.categories]);
-
-  const filterTabs: { id: RelatedFilter; label: string; icon: string }[] = [
-    { id: "day", label: "Day Tours", icon: "☀️" },
-    { id: "round", label: "Round Tours", icon: "🗺️" },
-    { id: "special", label: "Special Activities", icon: "✨" },
-  ];
-
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const scrollBy = (dir: number) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * (el.clientWidth * 0.8), behavior: "smooth" });
-  };
 
   return (
     <div className="min-h-screen bg-muted/30">
@@ -57,7 +22,7 @@ export default function TourClientPage({ tour, tours }: { tour: any, tours: Tour
         <div className="container-page relative h-full flex flex-col justify-end pb-10 text-white">
           <Link href="/tours" className="text-xs uppercase tracking-widest text-accent mb-3 inline-flex items-center gap-2 link-underline">← All tours</Link>
           <div className="flex flex-wrap gap-2 mb-4">
-            {tour.categories.map((c: string) => (
+            {tour.categories.map((c) => (
               <span key={c} className="text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full bg-white/15 backdrop-blur ring-1 ring-white/25">{c}</span>
             ))}
           </div>
@@ -97,7 +62,7 @@ export default function TourClientPage({ tour, tours }: { tour: any, tours: Tour
             <h2 className="font-display font-bold text-2xl md:text-3xl text-primary-deep">Tour Highlights</h2>
             <div className="gold-divider mt-3" />
             <div className="mt-6 grid sm:grid-cols-2 gap-4">
-              {tour.highlights.map((h: string, i: number) => (
+              {tour.highlights.map((h, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <div className="h-7 w-7 rounded-full bg-accent-soft text-accent grid place-items-center flex-shrink-0">
                     <Check className="h-4 w-4" />
@@ -113,7 +78,7 @@ export default function TourClientPage({ tour, tours }: { tour: any, tours: Tour
             <div className="card-surface p-6 md:p-8">
               <h3 className="font-display font-bold text-xl text-primary-deep mb-5">What's Included</h3>
               <ul className="space-y-3 text-sm">
-                {tour.inclusions.map((it: string) => (
+                {tour.inclusions.map((it) => (
                   <li key={it} className="flex items-start gap-3">
                     <span className="h-5 w-5 rounded-full bg-emerald-100 text-emerald-600 grid place-items-center flex-shrink-0 text-xs">✓</span>
                     <span className="text-foreground/85">{it}</span>
@@ -124,7 +89,7 @@ export default function TourClientPage({ tour, tours }: { tour: any, tours: Tour
             <div className="card-surface p-6 md:p-8">
               <h3 className="font-display font-bold text-xl text-primary-deep mb-5">Not Included</h3>
               <ul className="space-y-3 text-sm">
-                {tour.exclusions.map((it: string) => (
+                {tour.exclusions.map((it) => (
                   <li key={it} className="flex items-start gap-3">
                     <span className="h-5 w-5 rounded-full bg-red-100 text-red-600 grid place-items-center flex-shrink-0 text-xs"><X className="h-3 w-3" /></span>
                     <span className="text-foreground/85">{it}</span>
@@ -139,7 +104,7 @@ export default function TourClientPage({ tour, tours }: { tour: any, tours: Tour
             <h2 className="font-display font-bold text-2xl md:text-3xl text-primary-deep text-center">Your Journey</h2>
             <div className="gold-divider mx-auto mt-3" />
             <div className="mt-10 space-y-10">
-              {tour.itinerary.map((step: any, i: number) => (
+              {tour.itinerary.map((step, i) => (
                 <div key={i} className="relative">
                   {i !== tour.itinerary.length - 1 && (
                     <div className="absolute left-[2.5rem] top-24 bottom-[-2.5rem] w-0.5 bg-gradient-to-b from-accent/60 to-transparent hidden md:block" />
@@ -174,7 +139,7 @@ export default function TourClientPage({ tour, tours }: { tour: any, tours: Tour
               <h2 className="font-display font-bold text-2xl md:text-3xl text-primary-deep">Journey in Frames</h2>
               <p className="text-muted-foreground text-sm mt-1">Moments captured along the route</p>
               <div className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-3">
-                {gallery.map((src: string, idx: number) => (
+                {gallery.map((src, idx) => (
                   <div
                     key={idx}
                     className={`relative overflow-hidden rounded-xl group ${idx === 0 ? "col-span-2 row-span-2 h-[320px]" : "h-[150px]"}`}
@@ -238,95 +203,12 @@ export default function TourClientPage({ tour, tours }: { tour: any, tours: Tour
         </aside>
       </div>
 
-      {/* Related Tours */}
-      {related.length > 0 && (
-        <section className="border-t border-border bg-background">
-          <div className="container-page section-y">
-            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
-              <div>
-                <span className="eyebrow">You may also like</span>
-                <h2 className="font-display font-bold text-3xl md:text-4xl text-primary-deep mt-2">Related Tours</h2>
-                <p className="text-muted-foreground mt-2 max-w-xl">Hand-picked journeys that share the spirit of this experience.</p>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  aria-label="Previous"
-                  onClick={() => scrollBy(-1)}
-                  className="hidden md:grid h-11 w-11 rounded-full border border-border bg-card text-primary-deep place-items-center hover:bg-primary hover:text-primary-foreground hover:border-primary transition shadow-soft"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-                <button
-                  type="button"
-                  aria-label="Next"
-                  onClick={() => scrollBy(1)}
-                  className="hidden md:grid h-11 w-11 rounded-full border border-border bg-card text-primary-deep place-items-center hover:bg-primary hover:text-primary-foreground hover:border-primary transition shadow-soft"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Filter toggle */}
-            <div className="flex flex-wrap gap-2 mb-8">
-              {filterTabs.map((tab) => {
-                const active = relatedFilter === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => setRelatedFilter(tab.id)}
-                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 border ${
-                      active
-                        ? "bg-primary text-primary-foreground border-primary shadow-soft"
-                        : "bg-card text-primary-deep border-border hover:border-primary hover:text-primary"
-                    }`}
-                  >
-                    <span className="text-base">{tab.icon}</span>
-                    <span>{tab.label}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {related.length === 0 ? (
-               <div className="card-surface p-10 text-center text-muted-foreground">
-                 No related tours found in this category.
-               </div>
-            ) : (
-              <div
-                ref={scrollerRef}
-                className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              >
-                {related.map((t) => (
-                  <div
-                    key={t.id}
-                    className="snap-start flex-shrink-0 w-[85%] sm:w-[55%] md:w-[42%] lg:w-[32%]"
-                  >
-                    <TourCard tour={t} />
-                  </div>
-                ))}
-              </div>
-            )}
-
-            <div className="mt-8 text-center">
-              <Link href="/tours" className="btn-outline inline-flex">
-                View All Tours <ArrowRightIcon />
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
+      {related}
     </div>
   );
 }
 
-function ArrowRightIcon() {
-  return <ChevronRight className="h-4 w-4" />;
-}
-
-function Feature({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
+function Feature({ icon, title, desc }: { icon: ReactNode; title: string; desc: string }) {
   return (
     <div className="flex items-start gap-3">
       <div className="h-9 w-9 rounded-lg bg-accent-soft text-accent grid place-items-center flex-shrink-0">{icon}</div>
@@ -347,33 +229,23 @@ const FAQS = [
 ];
 
 function FaqSection() {
-  const [open, setOpen] = useState<number | null>(0);
   return (
     <div className="card-surface p-6 md:p-8">
       <span className="eyebrow">Good to know</span>
       <h2 className="font-display font-bold text-2xl md:text-3xl text-primary-deep mt-3">Frequently Asked Questions</h2>
       <div className="mt-6 divide-y divide-border">
-        {FAQS.map((f, i) => {
-          const active = open === i;
-          return (
-            <div key={i} className="py-4">
-              <button
-                onClick={() => setOpen(active ? null : i)}
-                className="w-full flex items-center justify-between gap-4 text-left"
-              >
-                <span className="font-semibold text-primary-deep">{f.q}</span>
-                <span className="h-8 w-8 rounded-full bg-accent-soft text-accent grid place-items-center flex-shrink-0">
-                  {active ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                </span>
-              </button>
-              <div className={`grid transition-all duration-300 ${active ? "grid-rows-[1fr] opacity-100 mt-3" : "grid-rows-[0fr] opacity-0"}`}>
-                <div className="overflow-hidden">
-                  <p className="text-sm text-muted-foreground leading-relaxed">{f.a}</p>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+        {FAQS.map((f, i) => (
+          <details key={f.q} open={i === 0} className="group py-4">
+            <summary className="w-full flex items-center justify-between gap-4 text-left cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+              <span className="font-semibold text-primary-deep">{f.q}</span>
+              <span className="h-8 w-8 rounded-full bg-accent-soft text-accent grid place-items-center flex-shrink-0">
+                <Plus className="h-4 w-4 group-open:hidden" />
+                <Minus className="h-4 w-4 hidden group-open:block" />
+              </span>
+            </summary>
+            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{f.a}</p>
+          </details>
+        ))}
       </div>
     </div>
   );
