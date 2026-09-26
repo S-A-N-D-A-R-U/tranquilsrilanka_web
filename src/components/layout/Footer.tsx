@@ -1,16 +1,12 @@
-"use client";
 import Link from "next/link";
-import { MapPin, Phone, Mail, Send, Plane, ShieldCheck, Award, Globe2, Clock } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 import {
   FaFacebookF,
-  FaTwitter,
   FaYoutube,
   FaPinterest,
-  FaTripadvisor,
   FaInstagram,
   FaWhatsapp,
 } from "react-icons/fa";
-import { useState } from "react";
 
 const links = {
   Explore: [
@@ -32,10 +28,9 @@ const links = {
   Support: [
     { label: "Contact Us", to: "/contact" },
     { label: "Plan Your Trip", to: "/plan-form" },
-    { label: "FAQs", to: "/contact" },
-    { label: "Terms & Conditions", to: "/contact" },
-    { label: "Privacy Policy", to: "/contact" },
-    { label: "Travel Insurance", to: "/contact" },
+    { label: "Transfers", to: "/transfer" },
+    { label: "Seat-in-Coach Tours", to: "/seat-in-coach" },
+    { label: "Latest News", to: "/blog" },
   ],
 };
 
@@ -44,31 +39,10 @@ const socials = [
   { Icon: FaInstagram, href: "https://www.instagram.com/tranquil_srilanka/", label: "Instagram" },
   { Icon: FaYoutube, href: "https://www.youtube.com/@tranquilsrilanka", label: "YouTube" },
   { Icon: FaPinterest, href: "https://www.pinterest.com/tranquilsl", label: "Pinterest" },
-  { Icon: FaTripadvisor, href: "#", label: "TripAdvisor" },
-  { Icon: FaTwitter, href: "#", label: "Twitter" },
   { Icon: FaWhatsapp, href: "https://wa.me/94779797597", label: "WhatsApp" },
 ];
 
-const trustBadges = [
-  { Icon: ShieldCheck, title: "Secure Booking", desc: "100% safe & encrypted" },
-  { Icon: Award, title: "Award Winning", desc: "Trusted by 10k+ travelers" },
-  { Icon: Globe2, title: "Local Experts", desc: "Born & raised in Sri Lanka" },
-  { Icon: Clock, title: "24/7 Support", desc: "Always here to help" },
-];
-
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail("");
-      setTimeout(() => setSubscribed(false), 3000);
-    }
-  };
-
   return (
     <footer className="relative bg-gradient-to-br from-primary-deep via-blue-900 to-blue-950 text-white overflow-hidden">
       {/* Decorative background */}
@@ -94,7 +68,7 @@ export default function Footer() {
               encounters, and timeless memories crafted by local experts.
             </p>
             <div className="space-y-3">
-              <a href="https://maps.google.com" className="flex items-start gap-3 text-sm text-white/80 hover:text-accent transition group">
+              <a href="https://www.google.com/maps/search/?api=1&query=No+60+Polgolla+Watta+Polgolla+Kandy+Sri+Lanka" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 text-sm text-white/80 hover:text-accent transition group">
                 <span className="h-9 w-9 rounded-lg bg-white/5 ring-1 ring-white/10 grid place-items-center flex-shrink-0 group-hover:bg-accent/20 transition">
                   <MapPin className="h-4 w-4 text-accent" />
                 </span>
@@ -167,10 +141,8 @@ export default function Footer() {
             © {new Date().getFullYear()} <span className="text-white font-medium">Tranquil Sri Lanka</span>. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-white/60">
-            <Link href="/contact" className="hover:text-accent transition">Privacy Policy</Link>
-            <Link href="/contact" className="hover:text-accent transition">Terms of Service</Link>
-            <Link href="/contact" className="hover:text-accent transition">Cookie Policy</Link>
-            <Link href="/contact" className="hover:text-accent transition">Sitemap</Link>
+            <Link href="/contact" className="hover:text-accent transition">Contact</Link>
+            <a href="/sitemap.xml" className="hover:text-accent transition">Sitemap</a>
           </div>
         </div>
       </div>

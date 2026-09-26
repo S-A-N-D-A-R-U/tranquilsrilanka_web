@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Globe, Mail, Menu, Phone, X } from "lucide-react";
+import { ChevronDown, Mail, Menu, Phone, X } from "lucide-react";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -84,10 +84,6 @@ export default function Navbar() {
                 <Phone className="h-4 w-4" />
                 <span className="hidden sm:inline">+94 77 979 7597</span>
               </a>
-              <button className={`flex items-center gap-1 ${solid ? "text-gray-600 hover:text-primary" : "text-white hover:text-white/80"}`}>
-                <Globe className="h-4 w-4" />
-                <span>EN</span>
-              </button>
             </div>
           </div>
 

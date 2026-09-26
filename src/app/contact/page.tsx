@@ -8,6 +8,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-export default function ContactPage() {
-  return <ContactClient />;
+export default async function ContactPage({ searchParams }: { searchParams: Promise<{ subject?: string | string[] }> }) {
+  // Pre-fill the subject when coming from an activity or offer ("Book this experience")
+  const { subject } = await searchParams;
+  const defaultSubject = typeof subject === "string" ? subject.slice(0, 200) : "";
+
+  return <ContactClient defaultSubject={defaultSubject} />;
 }

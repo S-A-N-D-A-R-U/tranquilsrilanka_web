@@ -87,7 +87,7 @@ export default async function ActivityPage({ params }: { params: Promise<{ slug:
             <div className="text-xs uppercase tracking-widest text-muted-foreground">From</div>
             <div className="font-display text-4xl font-bold text-primary-deep mt-1">${a.isOfferAvailable && a.offerPrice ? a.offerPrice : a.price}</div>
             <p className="text-xs text-muted-foreground mt-1">per person</p>
-            <Link href="/contact" className="btn-primary flex items-center justify-center w-full mt-6 gap-2">Book this experience <ChevronRight className="h-4 w-4" /></Link>
+            <Link href={`/contact?subject=${encodeURIComponent(`Booking: ${a.title}`)}`} rel="nofollow" className="btn-primary flex items-center justify-center w-full mt-6 gap-2">Book this experience <ChevronRight className="h-4 w-4" /></Link>
             <Link href="/plan-form" className="btn-outline flex items-center justify-center w-full mt-3">Add to a custom tour</Link>
           </div>
         </aside>
