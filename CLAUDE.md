@@ -19,7 +19,7 @@ There is no test suite. Other files in `scripts/` are one-off codemods/migration
 
 ## Environment
 
-`.env.local` must define `MONGODB_URI` — `src/lib/mongodb.ts` throws at import time without it, so any page touching `@/lib/api` fails (including `next build`, which pre-renders detail pages from the DB). Mail: `src/lib/mailer.ts` uses the Gmail transport with `EMAIL_USER`/`MAIL_USER` + `EMAIL_PASS`/`MAIL_PASS`, recipient `CONTACT_EMAIL` → `MAIL_FROM` → sender. `REVALIDATE_SECRET` enables `POST /api/revalidate`.
+All variables are documented in `.env.example` (copy to `.env.local`). `.env.local` must define `MONGODB_URI` — `src/lib/mongodb.ts` throws at import time without it, so any page touching `@/lib/api` fails (including `next build`, which pre-renders detail pages from the DB). Mail: `src/lib/mailer.ts` uses the Gmail transport with `EMAIL_USER`/`MAIL_USER` + `EMAIL_PASS`/`MAIL_PASS`, recipient `CONTACT_EMAIL` → `MAIL_FROM` → sender. `REVALIDATE_SECRET` enables `POST /api/revalidate`.
 
 ## Architecture
 
