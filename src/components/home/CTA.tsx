@@ -1,10 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 
 export default function CTA() {
   return (
     <section className="relative isolate overflow-hidden">
-      <img src="/tour_hero.webp" alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+      <Image src="/tour_hero.webp" alt="" fill sizes="100vw" className="object-cover" />
       <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/50" />
       <div className="container-page relative section-y text-primary-foreground text-center">
         <p className="eyebrow !text-accent">Ready to wander?</p>

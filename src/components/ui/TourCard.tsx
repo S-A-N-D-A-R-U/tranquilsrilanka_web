@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CmsImage from "@/components/ui/CmsImage";
 import { Clock, MapPin, Star, ArrowRight } from "lucide-react";
 import type { Tour } from "@/data/types";
 
@@ -9,7 +10,7 @@ export default function TourCard({ tour }: { tour: Tour }) {
       className="group block card-surface overflow-hidden hover:shadow-elegant hover:-translate-y-1 transition-all duration-500"
     >
       <div className="relative h-56 overflow-hidden">
-        <img src={tour.image} alt={tour.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-[1200ms]" loading="lazy" />
+        <CmsImage src={tour.image} alt={tour.title} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover group-hover:scale-110 transition-transform duration-[1200ms]" />
         <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/70 via-transparent to-transparent" />
 
         {tour.linkedOffers && tour.linkedOffers.length > 0 ? (

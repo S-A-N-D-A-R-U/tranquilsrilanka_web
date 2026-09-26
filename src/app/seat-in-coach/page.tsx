@@ -1,5 +1,6 @@
 
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Seat-in-Coach Group Tours in Sri Lanka",
@@ -48,7 +49,7 @@ export default function SeatInCoach() {
           <Link href="/contact" className="btn-primary mt-10">Reserve your seat</Link>
         </div>
         <div className="relative">
-          <img src="/Image_group_tour.webp" alt="Group tour" className="rounded-3xl shadow-elegant w-full object-cover" />
+          <Image src="/Image_group_tour.webp" alt="Seat-in-coach group tour travellers in Sri Lanka" width={1024} height={1024} sizes="(min-width: 1024px) 50vw, 100vw" className="rounded-3xl shadow-elegant w-full h-auto object-cover" />
           <div className="absolute -bottom-6 -left-6 bg-accent text-primary-deep p-5 rounded-2xl shadow-elegant max-w-[200px]">
             <div className="font-display text-3xl font-bold">$65<span className="text-base">/day</span></div>
             <div className="text-xs uppercase tracking-widest mt-1">Average price per traveller</div>

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import CmsImage from "@/components/ui/CmsImage";
 import Link from "next/link";
 import { Calendar, ArrowUpRight } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
@@ -31,7 +32,7 @@ export default async function Blog() {
             {posts.map((p: any) => (
               <Link key={p.slug || p.id} href={getPostLink(p)} target={getPostTarget(p)} rel={p.externalLink ? "noopener noreferrer" : undefined} className="group card-surface overflow-hidden hover:shadow-elegant transition flex flex-col">
                 <div className="relative h-56 overflow-hidden shrink-0">
-                  <img src={p.image} alt={p.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-[1200ms]" />
+                  <CmsImage src={p.image} alt={p.title} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover group-hover:scale-110 transition-transform duration-[1200ms]" />
                   <span className="absolute top-3 left-3 bg-accent text-primary-deep text-[10px] uppercase tracking-widest font-bold px-2.5 py-1 rounded-full">{p.category}</span>
                   {p.externalLink && (
                     <span className="absolute top-3 right-3 bg-white/90 text-primary-deep text-[10px] uppercase tracking-widest font-bold px-2.5 py-1 rounded-full flex items-center gap-1 backdrop-blur-sm">

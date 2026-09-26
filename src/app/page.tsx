@@ -24,7 +24,7 @@ export default async function Home() {
   const [tours, activities, heroSlides] = await Promise.all([getTours(), getActivities(), getHeroSlides()]);
 
   return (
-    <main>
+    <>
       <Hero slides={heroSlides} />
       <Reveal><Stats /></Reveal>
       <Reveal><Categories /></Reveal>
@@ -35,6 +35,6 @@ export default async function Home() {
       <Reveal><Testimonials /></Reveal>
       <Reveal><LatestNews /></Reveal>
       <Reveal><CTA /></Reveal>
-    </main>
+    </>
   );
 }

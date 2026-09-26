@@ -1,5 +1,6 @@
 
 import { Metadata } from "next";
+import CmsImage from "@/components/ui/CmsImage";
 
 export const revalidate = 3600;
 
@@ -30,7 +31,7 @@ export default async function Offers() {
             offers.map((o: any) => (
               <div key={o.id} className="group card-surface overflow-hidden hover:shadow-elegant transition">
                 <div className="relative h-64 overflow-hidden">
-                  <img src={o.image} alt={o.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-[1200ms]" />
+                  <CmsImage src={o.image} alt={o.title} fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover group-hover:scale-110 transition-transform duration-[1200ms]" />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/60 to-transparent" />
                   <span className="absolute top-4 left-4 bg-gradient-gold text-primary-foreground text-xs font-bold px-3 py-1.5 rounded-full shadow-gold">{o.discountBadge}</span>
                 </div>

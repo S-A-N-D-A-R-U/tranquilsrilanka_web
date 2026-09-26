@@ -1,4 +1,5 @@
 import { getActivities, getActivityBySlug } from "@/lib/api";
+import CmsImage from "@/components/ui/CmsImage";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Clock, MapPin, Check, ChevronRight } from "lucide-react";
@@ -46,7 +47,7 @@ export default async function ActivityPage({ params }: { params: Promise<{ slug:
   return (
     <>
       <section className="relative h-[55vh] min-h-[380px] overflow-hidden">
-        <img src={a.image} alt={a.title} className="absolute inset-0 h-full w-full object-cover" />
+        <CmsImage src={a.image} alt={a.title} fill sizes="100vw" loading="eager" fetchPriority="high" className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/90 via-primary-deep/30 to-transparent" />
         <div className="container-page relative h-full flex flex-col justify-end pb-10 text-white">
           <Link href="/things-to-do" className="text-xs uppercase tracking-widest text-accent mb-3 link-underline">← All experiences</Link>

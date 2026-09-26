@@ -1,5 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
+import CmsImage from "@/components/ui/CmsImage";
 import Link from "next/link";
 import { MapPin, Clock, Star, ChevronRight, Compass } from "lucide-react";
 import { mapPaths } from "./SriLankaPaths";
@@ -161,7 +162,7 @@ export default function ExploreMap({ tours, activities }: { tours: Tour[]; activ
                         <Link href={`/tours/${t.slug || t.id}`}
                           className="group flex gap-3 items-center rounded-2xl border border-border/70 p-2.5 hover:border-accent/60 hover:shadow-soft transition-all"
                         >
-                          <img src={t.image} alt={t.title} loading="lazy" decoding="async" className="h-16 w-20 rounded-xl object-cover" />
+                          <CmsImage src={t.image} alt={t.title} width={80} height={64} sizes="80px" className="h-16 w-20 rounded-xl object-cover" />
                           <div className="min-w-0 flex-1">
                             <p className="font-semibold text-primary-deep truncate group-hover:text-accent transition-colors">{t.title}</p>
                             <div className="flex items-center gap-3 mt-1 text-[11px] text-muted-foreground">

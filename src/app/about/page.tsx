@@ -1,5 +1,6 @@
 
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About Us — Family-Owned Tour Operator in Kandy",
@@ -49,7 +50,7 @@ export default function About() {
 
       <section className="container-page section-y grid lg:grid-cols-2 gap-14 items-center">
         <div className="relative">
-          <img src="/tranquil-group-tour.webp" alt="Happy travellers with the Tranquil Sri Lanka team on a south coast beach" className="rounded-3xl shadow-elegant w-full h-[500px] object-cover" />
+          <Image src="/tranquil-group-tour.webp" alt="Happy travellers with the Tranquil Sri Lanka team on a south coast beach" width={1376} height={768} sizes="(min-width: 1024px) 50vw, 100vw" className="rounded-3xl shadow-elegant w-full h-[500px] object-cover" />
           <div className="absolute -bottom-6 right-3 sm:-right-6 bg-primary-deep text-primary-foreground p-5 rounded-2xl shadow-elegant">
             <div className="text-3xl font-display font-bold text-accent">10+</div>
             <div className="text-xs uppercase tracking-widest mt-1">Years</div>
@@ -86,7 +87,7 @@ export default function About() {
             {team.map((m) => (
               <div key={m.name} className="text-center group">
                 <div className="relative rounded-3xl overflow-hidden mb-4 aspect-[4/5]">
-                  <img src={m.img} alt={m.name} className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-[1000ms]" />
+                  <Image src={m.img} alt={m.name} fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover group-hover:scale-105 transition-transform duration-[1000ms]" />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/40 to-transparent" />
                 </div>
                 <h3 className="font-display text-lg font-semibold text-primary-deep">{m.name}</h3>
