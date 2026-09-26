@@ -12,17 +12,16 @@ import Reveal from "@/components/ui/Reveal";
 import { Metadata } from "next";
 import { getTours, getActivities, getHeroSlides } from "@/lib/api";
 
-export const revalidate = 0;
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Tranquil Sri Lanka — Tailor-Made Tours of the Pearl Island",
+  title: { absolute: "Tranquil Sri Lanka — Tailor-Made Tours of the Pearl Island" },
   description: "Discover Sri Lanka with handcrafted tours, day excursions, transfers and authentic island experiences led by local experts.",
+  alternates: { canonical: "/" },
 };
 
 export default async function Home() {
-  const tours = await getTours();
-  const activities = await getActivities();
-  const heroSlides = await getHeroSlides();
+  const [tours, activities, heroSlides] = await Promise.all([getTours(), getActivities(), getHeroSlides()]);
 
   return (
     <main>

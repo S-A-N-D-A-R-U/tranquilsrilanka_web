@@ -2,8 +2,9 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Everything you need to know",
-  description: "Discover Sri Lanka",
+  title: "Sri Lanka Travel Guide — Best Time to Visit, Visa & Tips",
+  description: "Everything you need to know before visiting Sri Lanka: best time to visit by region, getting there, currency, language, connectivity and getting around.",
+  alternates: { canonical: "/travel-guide" },
 };
 
 import { Plane, Calendar, DollarSign, Languages, Wifi, Car, Utensils } from "lucide-react";

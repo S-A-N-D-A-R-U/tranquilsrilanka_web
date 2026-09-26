@@ -1,23 +1,36 @@
-import { getActivityBySlug } from "@/lib/api";
+import { getActivities, getActivityBySlug } from "@/lib/api";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Clock, MapPin, Check, ChevronRight, Star } from "lucide-react";
+import { Clock, MapPin, Check, ChevronRight } from "lucide-react";
 import { Metadata } from "next";
+import { SITE_NAME, truncate } from "@/lib/seo";
 
-export const revalidate = 0;
+export const revalidate = 3600;
+
+// Pre-render existing pages at build; new slugs are rendered on first visit and then cached
+export async function generateStaticParams() {
+  const items = await getActivities();
+  return items.filter((i: { slug?: string }) => i.slug).map((i: { slug: string }) => ({ slug: i.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const activity = await getActivityBySlug(slug);
   if (!activity) return { title: "Activity Not Found" };
 
+  const description = truncate(activity.shortDescription);
+  const url = `/activities/${activity.slug || activity.id}`;
+
   return {
-    title: `${activity.title} | Tranquil Sri Lanka`,
-    description: activity.shortDescription,
+    title: activity.title,
+    description,
+    alternates: { canonical: url },
     openGraph: {
-      images: [activity.image],
       title: activity.title,
-      description: activity.shortDescription,
+      description,
+      url,
+      siteName: SITE_NAME,
+      images: [activity.image],
     },
   };
 }
@@ -42,7 +55,6 @@ export default async function ActivityPage({ params }: { params: Promise<{ slug:
           <div className="mt-4 flex flex-wrap gap-5 text-sm text-white/85">
             <span className="inline-flex items-center gap-1.5"><MapPin className="h-4 w-4 text-accent" /> {a.destination}</span>
             <span className="inline-flex items-center gap-1.5"><Clock className="h-4 w-4 text-accent" /> {a.duration}</span>
-            <span className="inline-flex items-center gap-1.5"><Star className="h-4 w-4 fill-accent text-accent" /> 4.8</span>
           </div>
         </div>
       </section>
@@ -75,7 +87,7 @@ export default async function ActivityPage({ params }: { params: Promise<{ slug:
             <div className="text-xs uppercase tracking-widest text-muted-foreground">From</div>
             <div className="font-display text-4xl font-bold text-primary-deep mt-1">${a.isOfferAvailable && a.offerPrice ? a.offerPrice : a.price}</div>
             <p className="text-xs text-muted-foreground mt-1">per person</p>
-            <Link href="/contact" className="btn-primary flex items-center justify-center w-full mt-6 gap-2">Book this experience <ChevronRight className="h-4 w-4" /></Link>
+            <Link href={`/contact?subject=${encodeURIComponent(`Booking: ${a.title}`)}`} rel="nofollow" className="btn-primary flex items-center justify-center w-full mt-6 gap-2">Book this experience <ChevronRight className="h-4 w-4" /></Link>
             <Link href="/plan-form" className="btn-outline flex items-center justify-center w-full mt-3">Add to a custom tour</Link>
           </div>
         </aside>

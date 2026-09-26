@@ -1,15 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { preloadImages } from "@/lib/motion";
 
 const defaultSliderImages = [
-  { url: "/img23.jpg", title: "Golden Beaches", description: "Relax on the sun-kissed shores of Sri Lanka's stunning coastline.", tagline: "Where the Ocean Meets Serenity" },
-  { url: "/img2.jpg", title: "Cultural Wonders", description: "Step into a world of ancient kingdoms and sacred temples.", tagline: "Echoes of the Past" },
-  { url: "/img25.jpg", title: "Untamed Wildlife", description: "Witness majestic elephants and elusive leopards in the wild.", tagline: "Nature in its Purest Form" },
-  { url: "/img20.jpg", title: "Lush Tea Estates", description: "Breathe in the fresh mountain air as you stroll through tea plantations.", tagline: "Sip the Essence of Sri Lanka" },
+  { url: "/sun_and_beach.webp", title: "Golden Beaches", description: "Relax on the sun-kissed shores of Sri Lanka's stunning coastline.", tagline: "Where the Ocean Meets Serenity" },
+  { url: "/culture_and_heritage.webp", title: "Cultural Wonders", description: "Step into a world of ancient kingdoms and sacred temples.", tagline: "Echoes of the Past" },
+  { url: "/safari_and_wildlife.webp", title: "Untamed Wildlife", description: "Witness majestic elephants and elusive leopards in the wild.", tagline: "Nature in its Purest Form" },
+  { url: "/eco_and_nature.webp", title: "Lush Tea Estates", description: "Breathe in the fresh mountain air as you stroll through tea plantations.", tagline: "Sip the Essence of Sri Lanka" },
 ];
 
 const wordVariant = {
@@ -30,7 +30,6 @@ export default function Hero({ slides }: HeroProps) {
   const displaySlides = slides && slides.length > 0 ? slides : defaultSliderImages;
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     preloadImages(displaySlides.slice(1).map((s) => s.url));
@@ -96,16 +95,16 @@ export default function Hero({ slides }: HeroProps) {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.95 }}
               >
-                <button
-                  onClick={() => router.push("/plan-form")}
-                  className="group relative mt-6 sm:mt-10 overflow-hidden rounded-full bg-accent px-7 py-3.5 sm:px-10 sm:py-5 text-sm sm:text-lg font-bold text-white shadow-[0_0_0_4px_rgba(15,141,234,0.25),0_8px_32px_rgba(15,141,234,0.45)] transition-all duration-300 hover:shadow-[0_0_0_6px_rgba(15,141,234,0.35),0_12px_48px_rgba(15,141,234,0.55)] hover:-translate-y-1 animate-pulse-glow"
+                <Link
+                  href="/plan-form"
+                  className="group relative inline-block mt-6 sm:mt-10 overflow-hidden rounded-full bg-accent px-7 py-3.5 sm:px-10 sm:py-5 text-sm sm:text-lg font-bold text-white shadow-[0_0_0_4px_rgba(15,141,234,0.25),0_8px_32px_rgba(15,141,234,0.45)] transition-all duration-300 hover:shadow-[0_0_0_6px_rgba(15,141,234,0.35),0_12px_48px_rgba(15,141,234,0.55)] hover:-translate-y-1 animate-pulse-glow"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     Plan Your Tour
                     <ChevronRight className="transition-transform group-hover:translate-x-1" />
                   </span>
                   <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-accent via-sky-300 to-accent transition-transform duration-500 ease-in-out group-hover:translate-x-0" />
-                </button>
+                </Link>
               </motion.div>
             </motion.div>
           </AnimatePresence>

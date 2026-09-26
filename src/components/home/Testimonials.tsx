@@ -2,10 +2,13 @@ import { Quote, Star } from "lucide-react";
 import SectionHeader from "@/components/ui/SectionHeader";
 
 const items = [
-  { name: "Emma & James", country: "United Kingdom", text: "Tranquil organised the most magical 12 days of our lives. From the train ride to Ella to the leopard we spotted in Yala — every moment was beyond expectation.", img: "/img12.jpg" },
-  { name: "Marc Dubois", country: "France", text: "Our chauffeur guide Asanka became a friend. He knew every shortcut, every great restaurant, and made sure we saw the real Sri Lanka.", img: "/img17.jpg" },
-  { name: "The Tanaka Family", country: "Japan", text: "Travelling with three children isn't easy, but Tranquil made it effortless. The kids still talk about the elephants at Udawalawe.", img: "/img21.jpg" },
+  { name: "Emma & James", country: "United Kingdom", text: "Tranquil organised the most magical 12 days of our lives. From the train ride to Ella to the leopard we spotted in Yala — every moment was beyond expectation." },
+  { name: "Marc Dubois", country: "France", text: "Our chauffeur guide Asanka became a friend. He knew every shortcut, every great restaurant, and made sure we saw the real Sri Lanka." },
+  { name: "The Tanaka Family", country: "Japan", text: "Travelling with three children isn't easy, but Tranquil made it effortless. The kids still talk about the elephants at Udawalawe." },
 ];
+
+const initials = (name: string) =>
+  name.replace(/^The /, "").split(/[s&]+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("");
 
 export default function Testimonials() {
   return (
@@ -20,7 +23,9 @@ export default function Testimonials() {
             </div>
             <blockquote className="text-sm leading-relaxed text-foreground/85">"{t.text}"</blockquote>
             <figcaption className="mt-6 flex items-center gap-3">
-              <img src={t.img} alt={t.name} loading="lazy" decoding="async" className="h-10 w-10 rounded-full object-cover" />
+              <span aria-hidden="true" className="grid place-items-center h-10 w-10 rounded-full bg-accent-soft text-accent text-sm font-bold">
+                {initials(t.name)}
+              </span>
               <div>
                 <div className="font-semibold text-primary-deep text-sm">{t.name}</div>
                 <div className="text-xs text-muted-foreground">{t.country}</div>

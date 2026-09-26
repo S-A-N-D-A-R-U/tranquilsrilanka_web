@@ -2,8 +2,9 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Seat-in-Coach Tours",
-  description: "Discover Sri Lanka",
+  title: "Seat-in-Coach Group Tours in Sri Lanka",
+  description: "Affordable seat-in-coach group tours across Sri Lanka — daily departures, English-speaking guides, air-conditioned coaches and hotel pickup from major cities.",
+  alternates: { canonical: "/seat-in-coach" },
 };
 
 import Link from "next/link";

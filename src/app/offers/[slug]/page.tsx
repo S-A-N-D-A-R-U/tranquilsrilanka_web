@@ -1,21 +1,50 @@
 import { notFound } from "next/navigation";
-import { getOfferBySlug, getTours } from "@/lib/api";
+import { getOfferBySlug, getOffers, getTours } from "@/lib/api";
 import PageHero from "@/components/ui/PageHero";
 import TourCard from "@/components/ui/TourCard";
 import Link from "next/link";
+import { Metadata } from "next";
+import { SITE_NAME, truncate } from "@/lib/seo";
 
-export const revalidate = 0;
+export const revalidate = 3600;
+
+// Pre-render existing pages at build; new slugs are rendered on first visit and then cached
+export async function generateStaticParams() {
+  const items = await getOffers();
+  return items.filter((i: { slug?: string }) => i.slug).map((i: { slug: string }) => ({ slug: i.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const offer = await getOfferBySlug(slug);
+  if (!offer) return { title: "Offer Not Found" };
+
+  const description = truncate(offer.shortDescription || offer.fullDescription || "");
+  const url = `/offers/${offer.slug}`;
+
+  return {
+    title: offer.title,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: offer.title,
+      description,
+      url,
+      siteName: SITE_NAME,
+      images: [offer.image],
+    },
+  };
+}
 
 export default async function OfferDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const offer = await getOfferBySlug(slug);
+  const [offer, allTours] = await Promise.all([getOfferBySlug(slug), getTours()]);
 
   if (!offer) {
     notFound();
   }
 
   // Find tours that are linked to this offer
-  const allTours = await getTours();
   const relatedTours = allTours.filter((t: any) => 
     t.linkedOffers?.some((o: any) => o.slug === slug || o.id === offer.id)
   );
@@ -85,7 +114,7 @@ export default async function OfferDetailsPage({ params }: { params: Promise<{ s
           <p className="mt-4 text-primary-foreground/75 max-w-xl mx-auto">
             Contact our travel experts and mention "{offer.title}" to secure your discount.
           </p>
-          <Link href="/plan-form" className="btn-gold mt-8">Contact Us</Link>
+          <Link href={`/contact?subject=${encodeURIComponent(`Offer: ${offer.title}`)}`} rel="nofollow" className="btn-gold mt-8">Contact Us</Link>
         </div>
       </section>
     </>
