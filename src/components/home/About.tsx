@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { Check, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -15,7 +16,7 @@ export default function About() {
       <div className="container-page grid lg:grid-cols-2 gap-14 items-center">
         <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
           <div className="relative">
-            <img src="/about.webp" alt="Tranquil Sri Lanka" loading="lazy" decoding="async" className="w-full h-[440px] sm:h-[520px] object-cover rounded-3xl" />
+            <Image src="/about.webp" alt="Tranquil Sri Lanka local guide and travellers" width={1200} height={896} sizes="(min-width: 1024px) 50vw, 100vw" className="w-full h-[440px] sm:h-[520px] object-cover rounded-3xl" />
             <div className="absolute -bottom-6 right-3 sm:-right-6 bg-primary-deep text-primary-foreground p-6 rounded-2xl shadow-elegant max-w-[220px]">
               <div className="text-4xl font-display font-bold text-accent">10<span className="text-xl">+</span></div>
               <div className="text-xs uppercase tracking-widest text-primary-foreground/70 mt-1">Years crafting Sri Lankan journeys</div>

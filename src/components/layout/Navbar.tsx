@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Mail, Menu, Phone, X } from "lucide-react";
@@ -64,9 +65,13 @@ export default function Navbar() {
         {/* Logo */}
         <div className={`w-[200px] border-r transition-colors duration-300 flex items-center justify-center ${solid ? "border-gray-100" : "border-white/20"}`}>
           <Link href="/" className="block p-1">
-            <img 
-              src="/logo.png" 
-              alt="Tranquil Sri Lanka" 
+            <Image
+              src="/logo.png"
+              alt="Tranquil Sri Lanka"
+              width={325}
+              height={160}
+              sizes="128px"
+              loading="eager"
               className={`h-16 w-32 object-contain transition-all duration-300 ${!solid ? "drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] scale-105" : ""}`} 
             />
           </Link>

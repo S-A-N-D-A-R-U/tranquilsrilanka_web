@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CmsImage from "@/components/ui/CmsImage";
 import { ArrowUpRight, Calendar } from "lucide-react";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { getPosts } from "@/lib/api";
@@ -22,7 +23,7 @@ export default async function LatestNews() {
         <div className="mt-14 grid lg:grid-cols-12 gap-6">
           <Link href={getPostLink(hero)} target={getPostTarget(hero)} rel={hero.externalLink ? "noopener noreferrer" : undefined} className="lg:col-span-7 group block card-surface overflow-hidden hover:shadow-elegant transition">
             <div className="relative h-72 sm:h-96 overflow-hidden">
-              <img src={hero.image} loading="lazy" decoding="async" alt={hero.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-[1200ms]" />
+              <CmsImage src={hero.image} alt={hero.title} fill sizes="(min-width: 1024px) 58vw, 100vw" className="object-cover group-hover:scale-105 transition-transform duration-[1200ms]" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/80 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-7 text-white">
                 <span className="text-[11px] font-semibold uppercase tracking-widest text-accent">{hero.category}</span>
@@ -36,7 +37,7 @@ export default async function LatestNews() {
           <div className="lg:col-span-5 grid gap-4">
             {rest.slice(0, 3).map((p: any) => (
               <Link key={p.slug} href={getPostLink(p)} target={getPostTarget(p)} rel={p.externalLink ? "noopener noreferrer" : undefined} className="group flex gap-4 card-surface p-3 hover:shadow-soft transition">
-                <img src={p.image} loading="lazy" decoding="async" alt={p.title} className="h-24 w-28 rounded-xl object-cover flex-shrink-0 bg-black/10" />
+                <CmsImage src={p.image} alt={p.title} width={112} height={96} sizes="112px" className="h-24 w-28 rounded-xl object-cover flex-shrink-0 bg-black/10" />
                 <div className="min-w-0 flex flex-col justify-between py-1">
                   <div>
                     <span className="text-[10px] font-semibold uppercase tracking-widest text-accent">{p.category}</span>

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 import { MapPin, Users, Calendar, Clock, Phone, Mail, User, MessageSquare, Car, Shield, Sparkles, Check, Loader2 } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
 import Honeypot from "@/components/ui/Honeypot";
@@ -145,7 +146,9 @@ export default function Transfer() {
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {fleet.map((f) => (
             <div key={f.name} className="card-surface overflow-hidden hover:shadow-elegant transition">
-              <img src={f.img} alt={f.name} className="h-40 w-full object-cover" />
+              <div className="relative h-40">
+                <Image src={f.img} alt={`${f.name} transfer vehicle`} fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
+              </div>
               <div className="p-5">
                 <h3 className="font-display text-lg font-semibold text-primary-deep">{f.name}</h3>
                 <div className="text-xs text-muted-foreground mt-1.5 flex items-center gap-3">

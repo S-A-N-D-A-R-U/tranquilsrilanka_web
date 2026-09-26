@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import CmsImage from "@/components/ui/CmsImage";
 import { ChevronDown } from "lucide-react";
 
 type Props = {
@@ -32,16 +33,14 @@ export default function PageHero({ image, eyebrow, title, subtitle, height = "md
   return (
     <section className={`relative ${h} min-h-[420px] w-full overflow-hidden bg-primary-deep`}>
       {/* Slow Ken-Burns image */}
-      <motion.img
-        src={image}
-        alt=""
-        loading="eager"
-        decoding="async"
+      <motion.div
         initial={{ scale: 1.12 }}
         animate={{ scale: 1 }}
         transition={{ duration: 12, ease: "easeOut" }}
-        className="absolute inset-0 h-full w-full object-cover"
-      />
+        className="absolute inset-0"
+      >
+        <CmsImage src={image} alt="" fill sizes="100vw" loading="eager" fetchPriority="high" className="object-cover" />
+      </motion.div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50" />
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
 
