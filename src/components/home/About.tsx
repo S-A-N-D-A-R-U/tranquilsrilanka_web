@@ -1,8 +1,6 @@
-"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { Check, ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
 
 const values = [
   { title: "Local Storytellers", desc: "Guides born and raised in Sri Lanka, sharing stories you won't find in guidebooks." },
@@ -14,7 +12,7 @@ export default function About() {
   return (
     <section className="bg-sand/40 section-y">
       <div className="container-page grid lg:grid-cols-2 gap-14 items-center">
-        <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+        <div>
           <div className="relative">
             <Image src="/about.webp" alt="Tranquil Sri Lanka local guide and travellers" width={1200} height={896} sizes="(min-width: 1024px) 50vw, 100vw" className="w-full h-[440px] sm:h-[520px] object-cover rounded-3xl" />
             <div className="absolute -bottom-6 right-3 sm:-right-6 bg-primary-deep text-primary-foreground p-6 rounded-2xl shadow-elegant max-w-[220px]">
@@ -22,7 +20,7 @@ export default function About() {
               <div className="text-xs uppercase tracking-widest text-primary-foreground/70 mt-1">Years crafting Sri Lankan journeys</div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         <div>
           <p className="eyebrow">About Tranquil</p>
@@ -36,15 +34,8 @@ export default function About() {
             and multi-generational families.
           </p>
           <div className="mt-8 space-y-4">
-            {values.map((v, i) => (
-              <motion.div
-                key={v.title}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                className="flex items-start gap-4"
-              >
+            {values.map((v) => (
+              <div key={v.title} className="flex items-start gap-4">
                 <span className="grid place-items-center h-9 w-9 rounded-full bg-accent-soft text-accent shrink-0 mt-0.5">
                   <Check className="h-4 w-4" />
                 </span>
@@ -52,7 +43,7 @@ export default function About() {
                   <h3 className="font-semibold text-primary-deep">{v.title}</h3>
                   <p className="text-sm text-muted-foreground mt-0.5">{v.desc}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
           <Link href="/about" className="btn-primary mt-10">Read our story <ChevronRight className="h-4 w-4" /></Link>

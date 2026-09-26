@@ -69,6 +69,65 @@
   50% { box-shadow: 0 0 0 8px rgba(15,141,234,0.15), 0 12px 40px rgba(15,141,234,0.55); }
 }
 
+/*
+ * Motion without JavaScript. Content is always present and visible in the
+ * server HTML; these only animate it, so nothing waits for hydration.
+ */
+
+/* Scroll reveal: slides up as it enters the viewport where scroll-driven
+   animations are supported; elsewhere the content is simply shown.
+   Deliberately no opacity change — off-screen content must never be
+   transparent, or crawlers that render without scrolling see a blank page. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+@keyframes reveal-up {
+  from { transform: translateY(32px); }
+  to { transform: none; }
+}
+
+/* Entrance on page load; stagger with style={{ "--enter-delay": "0.2s" }} */
+.enter {
+  animation: enter-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--enter-delay, 0s);
+}
+
+@keyframes enter-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Slow zoom-out on hero background images */
+.ken-burns { animation: ken-burns 12s ease-out both; }
+
+@keyframes ken-burns {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+
+/* Small bounce for "scroll" hints */
+.nudge { animation: nudge 1.6s ease-in-out infinite; }
+
+@keyframes nudge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* Mouse-wheel dot in the homepage "Scroll to Explore" hint */
+.scroll-dot { animation: scroll-dot 1.6s ease-in-out infinite; }
+
+@keyframes scroll-dot {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(14px); opacity: 0.1; }
+}
+
 @layer base {
   :root {
     /* Surfaces */

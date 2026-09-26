@@ -11,8 +11,16 @@ export const metadata: Metadata = {
 };
 
 export default async function Tours({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
-  const [tours, { type }] = await Promise.all([getTours(), searchParams]);
+  const [tours, { type, category }] = await Promise.all([getTours(), searchParams]);
+  const initialType = type === "day" ? "day" : "round";
 
   // Remount when the Round/Day type changes via a nav link, so the tab state follows the URL
-  return <ToursClient key={type === "day" ? "day" : "round"} tours={tours} />;
+  return (
+    <ToursClient
+      key={initialType}
+      tours={tours}
+      initialType={initialType}
+      initialCategory={typeof category === "string" ? category : ""}
+    />
+  );
 }
