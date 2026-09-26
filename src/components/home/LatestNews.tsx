@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRight, Calendar } from "lucide-react";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { getPosts } from "@/lib/api";
+import { formatDate } from "@/lib/format";
 
 export default async function LatestNews() {
   const allPosts = await getPosts();
@@ -27,7 +28,7 @@ export default async function LatestNews() {
                 <span className="text-[11px] font-semibold uppercase tracking-widest text-accent">{hero.category}</span>
                 <h3 className="font-display text-2xl md:text-3xl font-bold mt-2 leading-tight">{hero.title}</h3>
                 <div className="mt-3 flex items-center gap-3 text-xs text-white/70">
-                  <Calendar className="h-3.5 w-3.5" /> {new Date(hero.createdAt).toLocaleDateString()} · {hero.readTime}
+                  <Calendar className="h-3.5 w-3.5" /> {formatDate(hero.createdAt)} · {hero.readTime}
                 </div>
               </div>
             </div>
@@ -42,7 +43,7 @@ export default async function LatestNews() {
                     <h4 className="font-display text-sm font-semibold text-primary-deep group-hover:text-primary line-clamp-2 mt-1">{p.title}</h4>
                   </div>
                   <div className="text-[11px] text-muted-foreground flex items-center justify-between">
-                    <span>{new Date(p.createdAt).toLocaleDateString()}</span>
+                    <span>{formatDate(p.createdAt)}</span>
                     <ArrowUpRight className="h-3.5 w-3.5 text-accent" />
                   </div>
                 </div>

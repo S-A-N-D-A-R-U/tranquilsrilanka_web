@@ -53,7 +53,7 @@ export default function ExploreMap({ tours, activities }: { tours: Tour[]; activ
 
         <div className="mt-14 grid lg:grid-cols-[1.05fr_1fr] gap-10 lg:gap-14 items-start">
           {/* Map */}
-          <div className="relative">
+          <div className="relative min-w-0">
             <div className="relative rounded-3xl bg-gradient-to-br from-primary-deep via-primary to-primary-glow p-6 sm:p-10 shadow-elegant overflow-hidden">
               {/* decorative grain */}
               <div className="absolute inset-0 opacity-[0.07] bg-grain pointer-events-none" />
@@ -131,7 +131,7 @@ export default function ExploreMap({ tours, activities }: { tours: Tour[]; activ
           </div>
 
           {/* Detail panel */}
-          <div className="relative">
+          <div className="relative min-w-0">
             <div key={active.id} className="card-surface p-6 sm:p-8 animate-in fade-in slide-in-from-bottom-3 duration-500">
               <div className="flex items-start gap-3">
                 <span className="grid place-items-center h-11 w-11 rounded-full bg-accent-soft text-accent shrink-0">

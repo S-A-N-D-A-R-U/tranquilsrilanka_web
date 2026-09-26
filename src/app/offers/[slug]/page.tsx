@@ -114,7 +114,7 @@ export default async function OfferDetailsPage({ params }: { params: Promise<{ s
           <p className="mt-4 text-primary-foreground/75 max-w-xl mx-auto">
             Contact our travel experts and mention "{offer.title}" to secure your discount.
           </p>
-          <Link href="/plan-form" className="btn-gold mt-8">Contact Us</Link>
+          <Link href={`/contact?subject=${encodeURIComponent(`Offer: ${offer.title}`)}`} rel="nofollow" className="btn-gold mt-8">Contact Us</Link>
         </div>
       </section>
     </>

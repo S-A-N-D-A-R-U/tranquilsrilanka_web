@@ -8,6 +8,8 @@ type Props = {
   title: React.ReactNode;
   subtitle?: string;
   height?: "sm" | "md" | "lg";
+  /** Use "p" when the page renders its own <h1> below the hero */
+  titleTag?: "h1" | "p";
 };
 
 const wordVariant = {
@@ -20,7 +22,9 @@ const wordVariant = {
   }),
 };
 
-export default function PageHero({ image, eyebrow, title, subtitle, height = "md" }: Props) {
+export default function PageHero({ image, eyebrow, title, subtitle, height = "md", titleTag = "h1" }: Props) {
+  const Heading = titleTag;
+  const MotionHeading = titleTag === "p" ? motion.p : motion.h1;
   const h = { sm: "h-[52vh]", md: "h-[68vh]", lg: "h-[82vh]" }[height];
   const titleStr = typeof title === "string" ? title : "";
   const words = titleStr ? titleStr.split(" ") : null;
@@ -54,22 +58,22 @@ export default function PageHero({ image, eyebrow, title, subtitle, height = "md
         )}
 
         {words ? (
-          <h1 className="font-display font-bold text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[1.02] tracking-tight text-balance max-w-5xl flex flex-wrap gap-x-4">
+          <Heading aria-label={titleStr} className="font-display font-bold text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[1.02] tracking-tight text-balance max-w-5xl flex flex-wrap gap-x-4">
             {words.map((w, i) => (
-              <motion.span key={i} custom={i} variants={wordVariant} initial="hidden" animate="visible" className="inline-block">
+              <motion.span key={i} aria-hidden="true" custom={i} variants={wordVariant} initial="hidden" animate="visible" className="inline-block">
                 {w}
               </motion.span>
             ))}
-          </h1>
+          </Heading>
         ) : (
-          <motion.h1
+          <MotionHeading
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15 }}
             className="font-display font-bold text-4xl sm:text-6xl md:text-7xl leading-[1.02] tracking-tight text-balance max-w-5xl"
           >
             {title}
-          </motion.h1>
+          </MotionHeading>
         )}
 
         {subtitle && (

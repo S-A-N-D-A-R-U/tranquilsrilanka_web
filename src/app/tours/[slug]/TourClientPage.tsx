@@ -149,14 +149,14 @@ export default function TourClientPage({ tour, tours }: { tour: any, tours: Tour
                         <span className="text-[10px] font-semibold tracking-widest opacity-90">DAY</span>
                         <span className="text-2xl font-display font-bold leading-none">{i + 1}</span>
                       </div>
-                      <h3 className="font-display text-lg font-bold text-primary-deep md:hidden">{step.title}</h3>
+                      <p aria-hidden="true" className="font-display text-lg font-bold text-primary-deep md:hidden">{step.title}</p>
                     </div>
                     <div className="flex-grow">
                       <div className="bg-muted/40 rounded-2xl p-5 md:p-6 border border-border/60">
-                        <div className="hidden md:flex items-center gap-3 mb-3">
-                          <span className="text-[11px] uppercase tracking-widest text-accent font-semibold">{step.day}</span>
-                          <span className="h-px w-6 bg-accent/40" />
-                          <h3 className="font-display text-xl font-bold text-primary-deep">{step.title}</h3>
+                        <div className="md:flex items-center gap-3 md:mb-3">
+                          <span className="hidden md:inline text-[11px] uppercase tracking-widest text-accent font-semibold">{step.day}</span>
+                          <span className="hidden md:inline h-px w-6 bg-accent/40" />
+                          <h3 className="sr-only md:not-sr-only font-display text-xl font-bold text-primary-deep">{step.title}</h3>
                         </div>
                         <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
                       </div>
@@ -178,7 +178,7 @@ export default function TourClientPage({ tour, tours }: { tour: any, tours: Tour
                     key={idx}
                     className={`relative overflow-hidden rounded-xl group ${idx === 0 ? "col-span-2 row-span-2 h-[320px]" : "h-[150px]"}`}
                   >
-                    <img src={src} alt={`Journey ${idx + 1}`} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <img src={src} alt={`${tour.title} — photo ${idx + 1}`} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                 ))}

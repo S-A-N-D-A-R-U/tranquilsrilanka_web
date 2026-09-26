@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Calendar, ArrowUpRight } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
 import { getPosts } from "@/lib/api";
+import { formatDate } from "@/lib/format";
 
 export const revalidate = 3600;
 
@@ -39,7 +40,7 @@ export default async function Blog() {
                   )}
                 </div>
                 <div className="p-6 flex flex-col flex-grow">
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground"><Calendar className="h-3.5 w-3.5" /> {p.createdAt ? new Date(p.createdAt).toLocaleDateString() : ''} · {p.readTime}</div>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground"><Calendar className="h-3.5 w-3.5" /> {formatDate(p.createdAt)} · {p.readTime}</div>
                   <h3 className="mt-3 font-display text-lg font-semibold text-primary-deep group-hover:text-primary leading-snug">{p.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground line-clamp-3 mb-4">{p.excerpt}</p>
                   <div className="mt-auto inline-flex items-center gap-1.5 text-xs font-semibold text-primary group-hover:text-accent">

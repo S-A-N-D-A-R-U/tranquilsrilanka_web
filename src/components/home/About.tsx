@@ -14,9 +14,9 @@ export default function About() {
     <section className="bg-sand/40 section-y">
       <div className="container-page grid lg:grid-cols-2 gap-14 items-center">
         <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-          <div className="relative rounded-3xl c:\Users\Sandaruwan\Downloads\img22.webp">
-            <img src="/about.webp" alt="Tranquil Sri Lanka" loading="lazy" decoding="async" className="w-full h-[440px] sm:h-[520px] object-cover" />
-            <div className="absolute -bottom-6 -right-6 bg-primary-deep text-primary-foreground p-6 rounded-2xl shadow-elegant max-w-[220px]">
+          <div className="relative">
+            <img src="/about.webp" alt="Tranquil Sri Lanka" loading="lazy" decoding="async" className="w-full h-[440px] sm:h-[520px] object-cover rounded-3xl" />
+            <div className="absolute -bottom-6 right-3 sm:-right-6 bg-primary-deep text-primary-foreground p-6 rounded-2xl shadow-elegant max-w-[220px]">
               <div className="text-4xl font-display font-bold text-accent">10<span className="text-xl">+</span></div>
               <div className="text-xs uppercase tracking-widest text-primary-foreground/70 mt-1">Years crafting Sri Lankan journeys</div>
             </div>
@@ -38,8 +38,8 @@ export default function About() {
             {values.map((v, i) => (
               <motion.div
                 key={v.title}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
                 className="flex items-start gap-4"

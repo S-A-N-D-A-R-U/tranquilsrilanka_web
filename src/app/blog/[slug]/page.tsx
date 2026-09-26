@@ -6,6 +6,7 @@ import { Calendar } from "lucide-react";
 import Link from "next/link";
 import { SITE_NAME, SITE_URL, jsonLdScript, stripHtml, truncate } from "@/lib/seo";
 import { sanitizeRichText } from "@/lib/sanitize";
+import { formatDate } from "@/lib/format";
 
 export const revalidate = 3600;
 
@@ -86,7 +87,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         image={post.image} 
         eyebrow={post.category} 
         title={post.title} 
-        subtitle={`${new Date(post.createdAt).toLocaleDateString()} · ${post.readTime}`}
+        titleTag="p"
+        subtitle={`${formatDate(post.createdAt)} · ${post.readTime}`}
       />
 
       <section className="container-page section-y">
@@ -97,7 +99,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               {post.title}
             </h1>
             <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4"/> {new Date(post.createdAt).toLocaleDateString()}</span>
+              <span className="flex items-center gap-1.5"><Calendar className="h-4 w-4"/> <time dateTime={post.createdAt}>{formatDate(post.createdAt)}</time></span>
               <span>•</span>
               <span>{post.readTime}</span>
               <span>•</span>

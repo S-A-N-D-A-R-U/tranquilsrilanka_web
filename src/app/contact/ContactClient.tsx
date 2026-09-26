@@ -18,10 +18,10 @@ const reasons = [
   "Best-price guarantee for unforgettable memories",
 ];
 
-export default function Contact() {
+export default function Contact({ defaultSubject = "" }: { defaultSubject?: string }) {
   const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState({ name: "", email: "", phone: "", subject: "", message: "", website: "" });
+  const [data, setData] = useState({ name: "", email: "", phone: "", subject: defaultSubject, message: "", website: "" });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
