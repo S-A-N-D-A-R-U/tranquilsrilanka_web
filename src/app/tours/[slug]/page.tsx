@@ -1,6 +1,8 @@
 import { getTourBySlug, getTours } from "@/lib/api";
 import { notFound } from "next/navigation";
-import TourClientPage from "./TourClientPage";
+import TourDetail from "./TourDetail";
+import RelatedTours from "./RelatedTours";
+import { buildRelatedTours } from "./relatedToursData";
 import { Metadata } from "next";
 import { SITE_NAME, SITE_URL, jsonLdScript, truncate } from "@/lib/seo";
 
@@ -91,7 +93,10 @@ export default async function TourPage({ params }: { params: Promise<{ slug: str
         type="application/ld+json"
         dangerouslySetInnerHTML={jsonLdScript(jsonLd)}
       />
-      <TourClientPage tour={tour} tours={tours} />
+      <TourDetail
+        tour={tour}
+        related={<RelatedTours lists={buildRelatedTours(tour, tours)} initialFilter={tour.type === "day" ? "day" : "round"} />}
+      />
     </>
   );
 }

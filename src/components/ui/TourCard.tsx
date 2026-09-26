@@ -1,9 +1,9 @@
 import Link from "next/link";
 import CmsImage from "@/components/ui/CmsImage";
 import { Clock, MapPin, Star, ArrowRight } from "lucide-react";
-import type { Tour } from "@/data/types";
+import type { TourCardData } from "@/data/types";
 
-export default function TourCard({ tour }: { tour: Tour }) {
+export default function TourCard({ tour }: { tour: TourCardData }) {
   return (
     <Link
       href={`/tours/${tour.slug || tour.id}`}

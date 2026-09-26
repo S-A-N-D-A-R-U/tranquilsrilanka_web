@@ -23,6 +23,14 @@ export type Tour = {
   linkedOffers?: any[];
 };
 
+/** The fields TourCard renders — lists sent to the browser only need these. */
+export type TourCardData = Pick<
+  Tour,
+  | "id" | "slug" | "type" | "title" | "image" | "duration" | "destinations" | "categories"
+  | "price" | "originalPrice" | "isOfferAvailable" | "offerPercentage" | "rating" | "reviews"
+  | "isPopular" | "overview" | "linkedOffers"
+>;
+
 export type Activity = {
   id: string;
   slug?: string;
