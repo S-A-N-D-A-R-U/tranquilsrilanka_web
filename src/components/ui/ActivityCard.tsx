@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CmsImage from "@/components/ui/CmsImage";
 import { Clock, MapPin } from "lucide-react";
 import type { Activity } from "@/data/types";
 
@@ -6,7 +7,7 @@ export default function ActivityCard({ activity }: { activity: Activity }) {
   return (
     <Link href={`/activities/${activity.slug || activity.id}`} className="group block card-surface overflow-hidden hover:shadow-elegant hover:-translate-y-1 transition-all duration-500">
       <div className="relative h-52 overflow-hidden">
-        <img src={activity.image} alt={activity.title} className="absolute inset-0 h-full w-full object-cover group-hover:scale-110 transition-transform duration-[1200ms]" loading="lazy" />
+        <CmsImage src={activity.image} alt={activity.title} fill sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover group-hover:scale-110 transition-transform duration-[1200ms]" />
         <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/60 via-transparent to-transparent" />
         <span className="absolute top-3 left-3 bg-white/95 text-primary-deep text-[11px] font-semibold px-2.5 py-1 rounded-full">
           {activity.category}

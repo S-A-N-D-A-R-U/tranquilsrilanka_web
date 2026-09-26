@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
+import CmsImage from "@/components/ui/CmsImage";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { preloadImages } from "@/lib/motion";
 
 const defaultSliderImages = [
   { url: "/sun_and_beach.webp", title: "Golden Beaches", description: "Relax on the sun-kissed shores of Sri Lanka's stunning coastline.", tagline: "Where the Ocean Meets Serenity" },
@@ -32,10 +32,6 @@ export default function Hero({ slides }: HeroProps) {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   useEffect(() => {
-    preloadImages(displaySlides.slice(1).map((s) => s.url));
-  }, [displaySlides]);
-
-  useEffect(() => {
     if (!isAutoPlaying) return;
     const t = setInterval(() => {
       setCurrentSlide((p) => (p === displaySlides.length - 1 ? 0 : p + 1));
@@ -58,7 +54,7 @@ export default function Hero({ slides }: HeroProps) {
             className="absolute inset-0"
             style={{ zIndex: idx === currentSlide ? 1 : 0 }}
           >
-            <img src={s.url} alt={s.title} loading={idx === 0 ? "eager" : "lazy"} decoding="async" fetchPriority={idx === 0 ? "high" : "auto"} className="absolute inset-0 h-full w-full object-cover" />
+            <CmsImage src={s.url} alt={s.title} fill sizes="100vw" loading={idx === 0 ? "eager" : "lazy"} fetchPriority={idx === 0 ? "high" : "auto"} className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50" />
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
           </motion.div>

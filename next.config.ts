@@ -47,7 +47,11 @@ const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
   images: {
-    unoptimized: true, // Common for static exports or specific hosting environments
+    // CMS uploads (admin → Cloudinary). Keep in sync with OPTIMIZED_REMOTE_HOSTS in src/components/ui/CmsImage.tsx
+    remotePatterns: [{ protocol: "https", hostname: "res.cloudinary.com", pathname: "/dntmvvjeo/**" }],
+    qualities: [75],
+    // Cloudinary URLs are versioned and public/ images rarely change, so cache optimized variants for a week
+    minimumCacheTTL: 604800,
   },
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];

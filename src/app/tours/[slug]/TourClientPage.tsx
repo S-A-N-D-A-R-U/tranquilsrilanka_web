@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useMemo } from "react";
+import CmsImage from "@/components/ui/CmsImage";
 import Link from "next/link";
 import { Clock, MapPin, Star, Check, X, ChevronRight, CalendarX, Wallet, Users, User, ChevronLeft, Plus, Minus, Tag } from "lucide-react";
 import TourCard from "@/components/ui/TourCard";
@@ -51,7 +52,7 @@ export default function TourClientPage({ tour, tours }: { tour: any, tours: Tour
     <div className="min-h-screen bg-muted/30">
       {/* Hero */}
       <section className="relative h-[55vh] md:h-[65vh] min-h-[420px] w-full overflow-hidden">
-        <img src={tour.image} alt={tour.title} loading="eager" decoding="async" className="absolute inset-0 h-full w-full object-cover" />
+        <CmsImage src={tour.image} alt={tour.title} fill sizes="100vw" loading="eager" fetchPriority="high" className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/90 via-primary-deep/40 to-primary-deep/10" />
         <div className="container-page relative h-full flex flex-col justify-end pb-10 text-white">
           <Link href="/tours" className="text-xs uppercase tracking-widest text-accent mb-3 inline-flex items-center gap-2 link-underline">← All tours</Link>
@@ -178,7 +179,7 @@ export default function TourClientPage({ tour, tours }: { tour: any, tours: Tour
                     key={idx}
                     className={`relative overflow-hidden rounded-xl group ${idx === 0 ? "col-span-2 row-span-2 h-[320px]" : "h-[150px]"}`}
                   >
-                    <img src={src} alt={`${tour.title} — photo ${idx + 1}`} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <CmsImage src={src} alt={`${tour.title} — photo ${idx + 1}`} fill sizes={idx === 0 ? "(min-width: 1024px) 45vw, 100vw" : "(min-width: 1024px) 22vw, 50vw"} className="object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                 ))}

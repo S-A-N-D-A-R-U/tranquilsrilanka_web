@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { Waves, Landmark, PawPrint, Mountain, TreePine, Utensils, ArrowUpRight, Heart, Activity, Leaf } from "lucide-react";
 import { motion } from "framer-motion";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -35,10 +36,10 @@ export default function Categories() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ delay: idx * 0.06, duration: 0.6 }}
-              className={`group relative overflow-hidden rounded-3xl ${c.span} ${isHero ? "lg:min-h-[480px]" : "min-h-[240px]"}`}
+              className={`group relative overflow-hidden rounded-3xl ${c.span} ${isHero ? "min-h-[240px] lg:min-h-[480px]" : "min-h-[240px]"}`}
             >
               <Link href={`/tours?category=${c.id}`} className="absolute inset-0 z-10" aria-label={c.label} />
-              <img loading="lazy" decoding="async" src={c.img} alt={c.label} className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Image src={c.img} alt={c.label} fill sizes={isHero ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"} className="object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
               <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-3xl" />
 

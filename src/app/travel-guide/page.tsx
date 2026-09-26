@@ -1,5 +1,6 @@
 
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Sri Lanka Travel Guide — Best Time to Visit, Visa & Tips",
@@ -93,7 +94,7 @@ export default function TravelGuide() {
         <div className="mt-12 grid sm:grid-cols-3 gap-5">
           {festivals.map((f) => (
             <div key={f.name} className="relative h-72 rounded-2xl overflow-hidden group">
-              <img loading="lazy" decoding="async" src={f.img} alt={f.name} className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <Image src={f.img} alt={f.name} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover group-hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary-deep/90 to-transparent" />
               <div className="absolute bottom-0 p-6 text-white">
                 <div className="text-[10px] uppercase tracking-widest text-accent">{f.date}</div>
@@ -111,7 +112,7 @@ export default function TravelGuide() {
             {cuisines.map((c) => (
               <div key={c.name} className="rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-accent transition">
                 <div className="relative h-44 overflow-hidden">
-                  <img loading="lazy" decoding="async" src={c.img} alt={c.name} className="absolute inset-0 h-full w-full object-cover" />
+                  <Image src={c.img} alt={c.name} fill sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
                 </div>
                 <div className="p-5">
                   <div className="inline-flex items-center gap-1.5 text-accent text-xs"><Utensils className="h-3.5 w-3.5" /> Must try</div>
