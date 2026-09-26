@@ -15,7 +15,7 @@ const suggestions = [
 
 export default function NotFound() {
   return (
-    <main className="flex-1 grid place-items-center bg-gradient-to-b from-background to-sand/40 pt-32 pb-20">
+    <div className="min-h-[80vh] grid place-items-center bg-gradient-to-b from-background to-sand/40 pt-32 pb-20">
       <div className="container-page max-w-xl text-center">
         <span className="inline-grid place-items-center h-16 w-16 rounded-full bg-accent-soft text-accent mb-6">
           <Compass className="h-8 w-8" />
@@ -42,6 +42,6 @@ export default function NotFound() {
         </ul>
         <Link href="/" className="btn-primary mt-8">Back to home</Link>
       </div>
-    </main>
+    </div>
   );
 }

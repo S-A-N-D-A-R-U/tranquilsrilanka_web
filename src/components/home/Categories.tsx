@@ -1,8 +1,6 @@
-"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { Waves, Landmark, PawPrint, Mountain, TreePine, Utensils, ArrowUpRight, Heart, Activity, Leaf } from "lucide-react";
-import { motion } from "framer-motion";
 import SectionHeader from "@/components/ui/SectionHeader";
 
 const cats = [
@@ -26,16 +24,12 @@ export default function Categories() {
         subtitle="From sun-drenched beaches to misty highlands — choose the experience that calls to you."
       />
       <div className="mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-3 gap-4">
-        {cats.map((c, idx) => {
+        {cats.map((c) => {
           const Icon = c.icon;
           const isHero = c.span.includes("row-span-2");
           return (
-            <motion.div
+            <div
               key={c.id}
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ delay: idx * 0.06, duration: 0.6 }}
               className={`group relative overflow-hidden rounded-3xl ${c.span} ${isHero ? "min-h-[240px] lg:min-h-[480px]" : "min-h-[240px]"}`}
             >
               <Link href={`/tours?category=${c.id}`} className="absolute inset-0 z-10" aria-label={c.label} />
@@ -52,7 +46,7 @@ export default function Categories() {
                   Explore <ArrowUpRight className="h-3.5 w-3.5" />
                 </span>
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </div>

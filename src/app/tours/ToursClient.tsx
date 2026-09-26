@@ -1,6 +1,6 @@
 "use client";
-import { useMemo, useState, useEffect, Suspense } from "react";
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useMemo, useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { Search, X } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
 import TourCard from "@/components/ui/TourCard";
@@ -20,25 +20,30 @@ const inDuration = (filter: string, dur: string) => {
   return true;
 };
 
-function ToursContent({ tours }: { tours: Tour[] }) {
-  const searchParams = useSearchParams();
+type Props = {
+  tours: Tour[];
+  /** From the URL, read on the server so the list renders without a Suspense fallback */
+  initialType: "round" | "day";
+  initialCategory: string;
+};
+
+export default function ToursClient({ tours, initialType, initialCategory }: Props) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [tab, setTab] = useState<"round" | "day">((searchParams.get("type") as "round" | "day") || "round");
+  const [tab, setTab] = useState<"round" | "day">(initialType);
   const [q, setQ] = useState("");
   const [loc, setLoc] = useState("");
-  const [cat, setCat] = useState(searchParams.get("category") || "");
+  const [cat, setCat] = useState(initialCategory);
   const [dur, setDur] = useState("");
   const [sort, setSort] = useState<"popular" | "price-asc" | "price-desc" | "rating">("popular");
   const [maxPrice, setMaxPrice] = useState<number>(0);
 
   useEffect(() => {
-    const next = new URLSearchParams(Array.from(searchParams.entries()));
+    const next = new URLSearchParams(window.location.search);
     next.set("type", tab);
     if (cat) next.set("category", cat); else next.delete("category");
     router.replace(`${pathname}?${next.toString()}`, { scroll: false });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab, cat, pathname, router]);
 
   const list = tours.filter((t) => t.type === tab);
@@ -167,13 +172,5 @@ function ToursContent({ tours }: { tours: Tour[] }) {
         )}
       </section>
     </>
-  );
-}
-
-export default function ToursClient({ tours }: { tours: Tour[] }) {
-  return (
-    <Suspense fallback={<div className="min-h-screen grid place-items-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
-      <ToursContent tours={tours} />
-    </Suspense>
   );
 }

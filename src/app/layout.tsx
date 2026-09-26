@@ -83,7 +83,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-[100dvh] flex flex-col font-sans text-foreground bg-background antialiased">
         <Navbar />
-        {children}
+        <main className="flex-1">{children}</main>
         <Footer />
         <WhatsAppFloat />
       </body>
